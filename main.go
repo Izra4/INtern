@@ -44,6 +44,7 @@ func main() {
 	v1 := r.Group("/v1")
 	v0.POST("/register", Handler.Register)
 	v1.POST("/login", Handler.LogIn)
+	v1.GET("/logout", Handler.LogOut)
 	v1.GET("/validate", middleware.Auth, Handler.Validate)
 	//v1.POST("/changePass", Handler.ChangePass)
 	//asd
