@@ -6,12 +6,8 @@ import (
 	"InternBCC/model"
 	"InternBCC/sdk"
 	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt/v5"
-	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 	"net/http"
-	"os"
-	"time"
 )
 
 func Register(c *gin.Context) {
@@ -29,7 +25,7 @@ func Register(c *gin.Context) {
 		return
 	}
 	//Hashing
-	hash, err := bcrypt.GenerateFromPassword([]byte(get.Password), bcrypt.DefaultCost)
+	hash, err := sdk.Hashing(get.Password)
 	if err != nil {
 		sdk.FailOrError(c, http.StatusInternalServerError, "Failed to Hash", err)
 		return
@@ -39,7 +35,7 @@ func Register(c *gin.Context) {
 		Model:    gorm.Model{},
 		Nama:     get.Nama,
 		Email:    get.Email,
-		Password: string(hash),
+		Password: hash,
 		Number:   get.Number,
 	}
 	result := database.DB.Create(&user)
@@ -70,25 +66,12 @@ func LogIn(c *gin.Context) {
 		return
 	}
 
-	err := bcrypt.CompareHashAndPassword([]byte(req.Password), []byte(body.Password))
+	err := sdk.ValidateHash(req.Password, body.Password)
 	if err != nil {
 		sdk.FailOrError(c, http.StatusBadRequest, "Failed to compare the password", err)
 		return
 	}
-	//generate jwt token
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub": req.ID,
-		"exp": time.Now().Add(time.Hour * 24).Unix(),
-	})
-
-	// Sign and get the complete encoded token as a string using the secret
-	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET_KEY")))
-	if err != nil {
-		c.JSON(400, gin.H{
-			"error": "Invalid Email or Password",
-		})
-		return
-	}
+	tokenString, _ := sdk.Token(req, c)
 
 	//Send back
 	c.SetSameSite(http.SameSiteLaxMode)
