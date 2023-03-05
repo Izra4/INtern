@@ -46,6 +46,5 @@ func main() {
 	v0.GET("/logout", Handler.LogOut)
 	v0.GET("/validate", middleware.JwtMiddleware(), Handler.Validate)
 	//v1.POST("/changePass", Handler.ChangePass)
-	//asd
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
