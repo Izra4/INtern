@@ -28,7 +28,7 @@ func Token(payload entity.User) (string, error) {
 	return tokenString, nil
 }
 
-func DecodeToken(signedToken string, ptrClaims jwt.Claims, KEY string) error {
+func DecodeToken(signedToken string, ptrClaims jwt.Claims, KEY string) (string, error) {
 
 	token, err := jwt.ParseWithClaims(signedToken, ptrClaims, func(t *jwt.Token) (interface{}, error) {
 		_, ok := t.Method.(*jwt.SigningMethodHMAC) // method used to sign the token
@@ -41,13 +41,13 @@ func DecodeToken(signedToken string, ptrClaims jwt.Claims, KEY string) error {
 
 	if err != nil {
 		// parse failed
-		return fmt.Errorf("token has been tampered with")
+		return "", fmt.Errorf("token has been tampered with")
 	}
 
 	if !token.Valid {
 		// token is not valid
-		return fmt.Errorf("invalid token")
+		return "", fmt.Errorf("invalid token")
 	}
 
-	return nil
+	return signedToken, nil
 }
