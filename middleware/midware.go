@@ -1,12 +1,15 @@
 package middleware
 
 import (
+	"InternBCC/model"
 	"InternBCC/sdk"
+	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -54,5 +57,26 @@ func Auth(c *gin.Context) {
 			"message": "Token is not valid",
 		})
 		return
+	}
+}
+func JwtMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+		authorization := c.Request.Header.Get("Authorization")
+		if !strings.HasPrefix(authorization, "Bearer ") {
+			c.Abort()
+			msg := "wrong header value"
+			sdk.FailOrError(c, http.StatusForbidden, msg, errors.New(msg))
+			return
+		}
+		tokenJwt := authorization[7:]
+		claims := model.UserClaims{}
+		jwtKey := os.Getenv("SECRET_KEY")
+		if err := sdk.DecodeToken(tokenJwt, &claims, jwtKey); err != nil {
+			c.Abort()
+			sdk.FailOrError(c, http.StatusUnauthorized, "unauthorized", err)
+			return
+		}
+		c.Set("user", claims)
 	}
 }

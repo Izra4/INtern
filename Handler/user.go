@@ -71,11 +71,11 @@ func LogIn(c *gin.Context) {
 		sdk.FailOrError(c, http.StatusBadRequest, "Failed to compare the password", err)
 		return
 	}
-	tokenString, _ := sdk.Token(req, c)
-
-	//Send back
-	c.SetSameSite(http.SameSiteLaxMode)
-	c.SetCookie("Authorization", tokenString, 3600*24*30, "", "", false, true)
+	tokenString, err := sdk.Token(req)
+	if err != nil {
+		sdk.FailOrError(c, http.StatusInternalServerError, "create token failed", err)
+		return
+	}
 	sdk.Success(c, http.StatusOK, "User berhasil log in", map[string]string{"token": tokenString})
 }
 
@@ -85,22 +85,16 @@ func LogOut(c *gin.Context) {
 }
 
 func Validate(c *gin.Context) {
-	id := c.MustGet("user")
+	id, _ := c.Get("user")
+	claims := id.(model.UserClaims)
 
-	var user entity.User
+	user := entity.User{}
 
-	err := database.DB.First(&user, id)
+	err := database.DB.First(&user, claims.ID)
 	if err.Error != nil {
 		sdk.FailOrError(c, http.StatusNotFound, "Data not found", err.Error)
 		return
 	}
-
-	//if err.RowsAffected == 0 {
-	//	c.JSON(http.StatusNotFound, gin.H{
-	//		"error": err.Error.Error(),
-	//	})
-	//	return
-	//}
 
 	c.JSON(200, gin.H{
 		"data":    user.Nama,

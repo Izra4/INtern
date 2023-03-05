@@ -6,18 +6,19 @@ import (
 	"InternBCC/middleware"
 	"InternBCC/model"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"log"
 )
 
 func main() {
-	//err := godotenv.Load()
+	err := godotenv.Load()
 	db := database.InitDB()
 	if err := database.Migrate(db); err != nil {
 		log.Fatal("Failed to Migrate")
 	}
-	//if err != nil {
-	//	log.Fatalln("failed to load env file")
-	//}
+	if err != nil {
+		log.Fatalln("failed to load env file")
+	}
 	r := gin.Default()
 	r.Use(func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
@@ -44,7 +45,7 @@ func main() {
 	v0.POST("/register", Handler.Register)
 	v0.POST("/login", Handler.LogIn)
 	v0.GET("/logout", Handler.LogOut)
-	v0.GET("/validate", middleware.Auth, Handler.Validate)
+	v0.GET("/validate", middleware.JwtMiddleware(), Handler.Validate)
 	//v1.POST("/changePass", Handler.ChangePass)
 	//asd
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
