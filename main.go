@@ -11,14 +11,14 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
+	//err := godotenv.Load()
 	db := database.InitDB()
 	if err := database.Migrate(db); err != nil {
 		log.Fatal("Failed to Migrate")
 	}
-	if err != nil {
-		log.Fatalln("failed to load env file")
-	}
+	//if err != nil {
+	//	log.Fatalln("failed to load env file")
+	//}
 	r := gin.Default()
 	r.Use(func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
