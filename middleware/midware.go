@@ -72,7 +72,7 @@ func JwtMiddleware() gin.HandlerFunc {
 		tokenJwt := authorization[7:]
 		claims := model.UserClaims{}
 		jwtKey := os.Getenv("SECRET_KEY")
-		if err := sdk.DecodeToken(tokenJwt, &claims, jwtKey); err != nil {
+		if _, err := sdk.DecodeToken(tokenJwt, &claims, jwtKey); err != nil {
 			c.Abort()
 			sdk.FailOrError(c, http.StatusUnauthorized, "unauthorized", err)
 			return
