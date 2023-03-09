@@ -1,4 +1,4 @@
-name: Build and Deploy Go
+name: Build and Deploy Goo
 on:
   workflow_dispatch:
   push:
