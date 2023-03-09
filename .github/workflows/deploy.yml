@@ -1,4 +1,4 @@
-name: Build and Deploy Go
+name: Build and Deploy Go BCC
 on:
   workflow_dispatch:
   push:
@@ -6,7 +6,7 @@ on:
 jobs:
   web-deploy:
     if: "contains(github.event.head_commit.message, 'DEPLOY')"
-    name: 🎉 Build and Deploy Go
+    name: 🎉 Build and Deploy Go BCC
     runs-on: ubuntu-latest
 
     steps:
