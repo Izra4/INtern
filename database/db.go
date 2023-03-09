@@ -28,5 +28,11 @@ func InitDB() *gorm.DB {
 }
 
 func Migrate(db *gorm.DB) error {
-	return db.AutoMigrate(&entity.User{}, &entity.Gedung{}, &entity.Testimoni{}, &entity.Tag{})
+	return db.AutoMigrate(
+		&entity.User{},
+		&entity.Gedung{},
+		&entity.Tag{},
+		&entity.Fasilitas{},
+		&entity.Aturan{},
+		&entity.Booking{})
 }

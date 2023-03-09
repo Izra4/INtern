@@ -8,7 +8,25 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"net/http"
+	"strings"
 )
+
+func upperCase(pass string) bool {
+	for _, char := range pass {
+		if char >= 'A' && char <= 'Z' {
+			return true
+		}
+	}
+	return false
+}
+func hasNum(pass string) bool {
+	for _, char := range pass {
+		if char >= '0' && char <= '9' {
+			return true
+		}
+	}
+	return false
+}
 
 func Register(c *gin.Context) {
 	//get name, email, number, password
@@ -17,10 +35,24 @@ func Register(c *gin.Context) {
 		sdk.FailOrError(c, http.StatusBadRequest, "Mohon lengkapi input Anda", err)
 		return
 	}
-	if get.Password != get.Passconfirm {
+	if !strings.HasSuffix(get.Email, "@gmail.com") {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"status":  "fail",
-			"message": "Password tidak sama",
+			"message": "Email harus berakhiran @gmail.com",
+		})
+		return
+	}
+	if (!upperCase(get.Password)) || (!hasNum(get.Password)) {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  "fail",
+			"message": "Password harus mengandung 1 huruf kapital dan 1 angka",
+		})
+		return
+	}
+	if (get.Password != get.Passconfirm) || (len(get.Password) < 8) {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  "fail",
+			"message": "Password tidak sama / kurang dari 8 karakter",
 		})
 		return
 	}
@@ -97,7 +129,7 @@ func Validate(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{
-		"data":    user.Nama,
+		"data":    user,
 		"error":   nil,
 		"message": "logged in",
 	})

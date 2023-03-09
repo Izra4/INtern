@@ -22,7 +22,6 @@ type UserClaims struct {
 	jwt.RegisteredClaims
 }
 
-// exp example: (time.Hour * 1), etc
 func NewUserClaims(id uint, exp time.Duration) UserClaims {
 	return UserClaims{
 		ID: id,
