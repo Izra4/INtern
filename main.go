@@ -4,6 +4,7 @@ import (
 	"InternBCC/Handler"
 	"InternBCC/database"
 	"InternBCC/middleware"
+	"InternBCC/model"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"log"
@@ -38,10 +39,7 @@ func main() {
 		})
 	})
 
-	//model.TagDummy()
-	//model.GDummy()
-	//model.FasDummy()
-	//model.ADummy()
+	model.GDummy()
 	v0 := r.Group("/v0")
 	v0.POST("/register", Handler.Register)
 	v0.POST("/login", Handler.LogIn)

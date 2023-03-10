@@ -32,7 +32,5 @@ func Migrate(db *gorm.DB) error {
 		&entity.User{},
 		&entity.Gedung{},
 		&entity.Tag{},
-		&entity.Fasilitas{},
-		&entity.Aturan{},
 		&entity.Booking{})
 }

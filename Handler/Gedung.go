@@ -6,15 +6,23 @@ import (
 	"InternBCC/sdk"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strings"
 )
 
 func FindAllGedung(c *gin.Context) {
 	var get []entity.Gedung
-	if err := database.DB.Find(&get).Error; err != nil {
-		sdk.FailOrError(c, http.StatusNotFound, "failed to get data", err)
-		return
+	type disp struct {
+		Nama      string
+		Kecamatan string
+		Harga     string
+		Alamat    string
 	}
-	sdk.Success(c, 200, "Data found", get)
+
+	var result []disp
+	if err := database.DB.Model(&get).Find(&result).Error; err != nil {
+		sdk.FailOrError(c, http.StatusInternalServerError, "Failed to load data", err)
+	}
+	sdk.Success(c, 200, "Data found", result)
 }
 
 func GetGedungByID(c *gin.Context) {
@@ -24,5 +32,31 @@ func GetGedungByID(c *gin.Context) {
 		sdk.FailOrError(c, http.StatusNotFound, "Data not Found", err)
 		return
 	}
-	sdk.Success(c, http.StatusOK, "Data Found", get)
+	splitFasil := strings.Split(get.Fasilitas, ";")
+	splitTag := strings.Split(get.Tag, ";")
+	type fasil struct {
+		Nama      string
+		Alamat    string
+		Kecamatan string
+		Harga     string
+		Kapasitas string
+		Luas      string
+		Fasilitas []string
+		Tag       []string
+		Aturan    string
+	}
+
+	var result = fasil{
+		Nama:      get.Nama,
+		Alamat:    get.Alamat,
+		Kecamatan: get.Kecamatan,
+		Harga:     get.Harga,
+		Kapasitas: get.Kapasitas,
+		Luas:      get.Luas,
+		Tag:       splitTag,
+		Fasilitas: splitFasil,
+		Aturan:    get.Aturan,
+	}
+
+	sdk.Success(c, http.StatusOK, "Data Found", result)
 }
