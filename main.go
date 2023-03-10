@@ -4,7 +4,6 @@ import (
 	"InternBCC/Handler"
 	"InternBCC/database"
 	"InternBCC/middleware"
-	"InternBCC/model"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"log"
@@ -19,6 +18,10 @@ func main() {
 	if err := database.Migrate(db); err != nil {
 		log.Fatal("Failed to Migrate")
 	}
+
+	db.Exec("TRUNCATE TABLE Gedung")
+	db.Exec("TRUNCATE TABLE User")
+	db.Exec("TRUNCATE TABLE Booking")
 	if err != nil {
 		log.Fatalln("failed to load env file")
 	}
@@ -41,7 +44,7 @@ func main() {
 		})
 	})
 
-	model.GDummy()
+	//model.GDummy()
 	v0 := r.Group("/v0")
 	v0.POST("/register", Handler.Register)
 	v0.POST("/login", Handler.LogIn)
