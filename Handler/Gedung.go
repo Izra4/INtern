@@ -12,6 +12,7 @@ import (
 func FindAllGedung(c *gin.Context) {
 	var get []entity.Gedung
 	type disp struct {
+		ID        uint
 		Nama      string
 		Kecamatan string
 		Harga     string
