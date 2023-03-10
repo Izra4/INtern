@@ -21,7 +21,14 @@ func FindAllGedung(c *gin.Context) {
 	var result []disp
 	if err := database.DB.Model(&get).Find(&result).Error; err != nil {
 		sdk.FailOrError(c, http.StatusInternalServerError, "Failed to load data", err)
+		return
 	}
+	//var links []entity.Link
+	//if err := database.DB.Find(&links); err != nil {
+	//	for _, link := range links {
+	//		fmt.Println(link.ID)
+	//	}
+	//}
 	sdk.Success(c, 200, "Data found", result)
 }
 
@@ -38,7 +45,7 @@ func GetGedungByID(c *gin.Context) {
 		Nama      string
 		Alamat    string
 		Kecamatan string
-		Harga     string
+		Harga     int
 		Kapasitas string
 		Luas      string
 		Fasilitas []string

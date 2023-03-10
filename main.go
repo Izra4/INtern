@@ -18,10 +18,9 @@ func main() {
 	if err := database.Migrate(db); err != nil {
 		log.Fatal("Failed to Migrate")
 	}
-
-	db.Exec("TRUNCATE TABLE Gedung")
-	db.Exec("TRUNCATE TABLE User")
-	db.Exec("TRUNCATE TABLE Booking")
+	if err := database.TruncateTableIgnoreFK(db, "gedungs"); err != nil {
+		panic(err)
+	}
 	if err != nil {
 		log.Fatalln("failed to load env file")
 	}
@@ -44,7 +43,14 @@ func main() {
 		})
 	})
 
+	//supClient := supabasestorageuploader.NewSupabaseClient(
+	//	"https://ontvftbxgsmzxwlqhsdn.supabase.co",
+	//	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9udHZmdGJ4Z3Ntenh3bHFoc2RuIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzg0MDgxMzQsImV4cCI6MTk5Mzk4NDEzNH0.7yypIF1_gkHACVRxolU2KjhLpdUumKw3OdaRtHSnB9Q",
+	//	"gambar-gedung",
+	//	"",
+	//)
 	//model.GDummy()
+	//model.LDummy()
 	v0 := r.Group("/v0")
 	v0.POST("/register", Handler.Register)
 	v0.POST("/login", Handler.LogIn)
