@@ -27,10 +27,21 @@ func InitDB() *gorm.DB {
 	return DB
 }
 
+func DropTable(db *gorm.DB, tableName ...string) error {
+	// Drop the table
+	for _, tableName := range tableName {
+		result := db.Exec(fmt.Sprintf("DROP TABLE IF EXISTS %s", tableName))
+		if result.Error != nil {
+			return result.Error
+		}
+	}
+
+	return nil
+}
+
 func Migrate(db *gorm.DB) error {
 	return db.AutoMigrate(
 		&entity.User{},
 		&entity.Gedung{},
-		&entity.Tag{},
 		&entity.Booking{})
 }

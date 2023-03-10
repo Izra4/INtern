@@ -13,6 +13,9 @@ import (
 func main() {
 	err := godotenv.Load()
 	db := database.InitDB()
+	if err := database.DropTable(db, "Booking", "Gedung", "User"); err != nil {
+		panic(err)
+	}
 	if err := database.Migrate(db); err != nil {
 		log.Fatal("Failed to Migrate")
 	}
@@ -43,7 +46,6 @@ func main() {
 	v0 := r.Group("/v0")
 	v0.POST("/register", Handler.Register)
 	v0.POST("/login", Handler.LogIn)
-	v0.GET("/logout", Handler.LogOut)
 	v0.GET("/validate", middleware.JwtMiddleware(), Handler.Validate)
 
 	v0.GET("/gedungs", Handler.FindAllGedung)

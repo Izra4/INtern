@@ -15,7 +15,3 @@ type Gedung struct {
 	Aturan    string `gorm:"many2many:gedung_aturan"`
 	Booking   *[]Booking
 }
-type Tag struct {
-	gorm.Model
-	Tipe string `gorm:"type:VARCHAR(20);NOT NULL"`
-}
