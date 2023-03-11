@@ -19,7 +19,7 @@ func GDummy() {
 		Kapasitas: "8.000 Orang",
 		Luas:      "4.356 m2",
 		Tag:       "Wisuda;seminar;konser;pernikahan",
-		Booking:   nil,
+		Bookings:  nil,
 	}
 	G2 := entity.Gedung{
 		Model:     gorm.Model{},
@@ -32,7 +32,7 @@ func GDummy() {
 		Luas:      "1.709 m2",
 		Aturan:    "Tidak menyajikan sexy dancer",
 		Tag:       "konser;pernikahan;pameran",
-		Booking:   nil,
+		Bookings:  nil,
 	}
 	G3 := entity.Gedung{
 		Model:     gorm.Model{},
@@ -45,7 +45,7 @@ func GDummy() {
 		Luas:      "1.300 m2",
 		Aturan:    "Dilarang Merokok;Dilarang membawa makanan dari luar",
 		Tag:       "Pernikahan;Seminar;Gathering",
-		Booking:   nil,
+		Bookings:  nil,
 	}
 	G4 := entity.Gedung{
 		Model:     gorm.Model{},
@@ -58,7 +58,7 @@ func GDummy() {
 		Fasilitas: "150 buah kursi dan meja;Genzet;Backstage;Toilet;Area parkir;Sound system",
 		Aturan:    "Harus menggunakan ijin keramaian",
 		Tag:       "Pernikahan;Seminar;Pameran;Wisuda",
-		Booking:   nil,
+		Bookings:  nil,
 	}
 	G5 := entity.Gedung{
 		Model:     gorm.Model{},
@@ -71,7 +71,7 @@ func GDummy() {
 		Fasilitas: "Generator set 500 Kva;Kursi 100 buah;Karpet lantai; AC (Standing);Listirk 50.000;Area parkir;Backstage;Toilet;Audio (Sound System)",
 		Aturan:    "Dilarang membawa barang yang memicu kebakaran",
 		Tag:       "Wisuda;Seminar;Pernikahan",
-		Booking:   nil,
+		Bookings:  nil,
 	}
 	G6 := entity.Gedung{
 		Model:     gorm.Model{},
@@ -84,7 +84,7 @@ func GDummy() {
 		Fasilitas: "Backstage;Kursi",
 		Aturan:    "Dilarang membawa barang yang memicu kebakaran",
 		Tag:       "Pernikahan;Seminar",
-		Booking:   nil,
+		Bookings:  nil,
 	}
 
 	G7 := entity.Gedung{
@@ -98,7 +98,7 @@ func GDummy() {
 		Tag:       "Gathering;Wisuda;Seminar",
 		Fasilitas: "Wifi;Projector;Screen;Kursi dan Meja;AC;Sound system;lighting",
 		Aturan:    "Dilarang memakai sandal;Dilarang merokok;Dilarang membawa makanan dari luar",
-		Booking:   nil,
+		Bookings:  nil,
 	}
 
 	G8 := entity.Gedung{
@@ -112,7 +112,7 @@ func GDummy() {
 		Tag:       "Gathering;Pernikahan",
 		Fasilitas: "Wifi;Projector;Screen;Kursi dan meja;AC;Sound system; lighting",
 		Aturan:    "Dilarang merusak properti",
-		Booking:   nil,
+		Bookings:  nil,
 	}
 
 	if err := database.DB.Create(&G1).Error; err != nil {

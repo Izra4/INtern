@@ -10,5 +10,6 @@ type User struct {
 	Email    string `gorm:"unique;NOT NULL"`
 	Password string `gorm:"NOT NULL"`
 	Number   string `gorm:"type:varchar(20);NOT NULL"`
-	Booking  []Booking
+	Bookings []Booking
+	Payments []Payment
 }

@@ -14,5 +14,6 @@ type Gedung struct {
 	Fasilitas string `gorm:"type:TEXT;NOT NULL"`
 	Aturan    string `gorm:"type:TEXT;NOT NULL"`
 	Links     []Link
-	Booking   *[]Booking
+	Bookings  []Booking
+	Payments  []Payment
 }

@@ -15,7 +15,7 @@ func FindAllGedung(c *gin.Context) {
 		ID        uint
 		Nama      string
 		Kecamatan string
-		Harga     string
+		Harga     int
 		Alamat    string
 	}
 
