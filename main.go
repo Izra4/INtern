@@ -4,7 +4,6 @@ import (
 	"InternBCC/Handler"
 	"InternBCC/database"
 	"InternBCC/middleware"
-	"InternBCC/model"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"log"
@@ -18,12 +17,6 @@ func main() {
 	}
 	if err := database.Migrate(db); err != nil {
 		log.Fatal("Failed to Migrate")
-	}
-	if err := database.TruncateTableIgnoreFK(db, "gedungs"); err != nil {
-		panic(err)
-	}
-	if err := database.TruncateTableIgnoreFK(db, "links"); err != nil {
-		panic(err)
 	}
 	if err != nil {
 		log.Fatalln("failed to load env file")
@@ -53,8 +46,8 @@ func main() {
 	//	"gambar-gedung",
 	//	"",
 	//)
-	model.GDummy()
-	model.LDummy()
+	//model.GDummy()
+	//model.LDummy()
 	v0 := r.Group("/v0")
 	v0.POST("/register", Handler.Register)
 	v0.POST("/login", Handler.LogIn)
