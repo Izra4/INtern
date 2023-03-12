@@ -114,7 +114,6 @@ func LogIn(c *gin.Context) {
 func Validate(c *gin.Context) {
 	id, _ := c.Get("user")
 	claims := id.(model.UserClaims)
-
 	user := entity.User{}
 
 	err := database.DB.First(&user, claims.ID)

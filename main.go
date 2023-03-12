@@ -4,7 +4,6 @@ import (
 	"InternBCC/Handler"
 	"InternBCC/database"
 	"InternBCC/middleware"
-	"InternBCC/model"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"log"
@@ -13,15 +12,9 @@ import (
 func main() {
 	err := godotenv.Load()
 	db := database.InitDB()
-	if err := database.DropTable(db, "Booking", "Gedung", "User"); err != nil {
-		panic(err)
-	}
-	if err := database.TruncateTableIgnoreFK(db, "gedungs"); err != nil {
-		panic(err)
-	}
-	if err := database.TruncateTableIgnoreFK(db, "links"); err != nil {
-		panic(err)
-	}
+	//if err := database.TruncateTableIgnoreFK(db, "links"); err != nil {
+	//	panic(err)
+	//}
 	if err := database.Migrate(db); err != nil {
 		log.Fatal("Failed to Migrate")
 	}
@@ -47,8 +40,8 @@ func main() {
 		})
 	})
 
-	model.GDummy()
-	model.LDummy()
+	//model.GDummy()
+	//model.LDummy()
 	v0 := r.Group("/v0")
 	v0.POST("/register", Handler.Register)
 	v0.POST("/login", Handler.LogIn)

@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 func Booking(c *gin.Context) {
@@ -25,10 +26,11 @@ func Booking(c *gin.Context) {
 		sdk.FailOrError(c, http.StatusBadRequest, "Lengkapi isian Anda", err)
 		return
 	}
-
+	waktu := req.Tanggal
+	waktu = waktu.Truncate(24 * time.Hour)
 	var get = entity.Booking{
 		Nama:      req.Nama,
-		Tanggal:   req.Tanggal,
+		Tanggal:   waktu,
 		Keperluan: req.Keperluan,
 		Nomer:     req.Nomor,
 		Alamat:    req.Alamat,
