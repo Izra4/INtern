@@ -6,4 +6,5 @@ type Payment struct {
 	gorm.Model
 	UserID   uint
 	GedungID uint
+	Link     string
 }

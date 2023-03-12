@@ -129,3 +129,25 @@ func Validate(c *gin.Context) {
 		"message": "logged in",
 	})
 }
+
+func ChangeNameNumber(c *gin.Context) {
+	var req struct {
+		Nama  string `json:"nama"`
+		Nomor string `json:"nomor"`
+	}
+	if err := c.BindJSON(&req); err != nil {
+		sdk.FailOrError(c, http.StatusInternalServerError, "Error to Read", err)
+		return
+	}
+	var users entity.User
+	if req.Nama != "" {
+		users.Nama = req.Nama
+	}
+	if req.Nomor != "" {
+		users.Number = req.Nomor
+	}
+	if err := database.DB.Save(&users).Error; err != nil {
+		sdk.FailOrError(c, http.StatusAccepted, "Data telah diupdate", err)
+		return
+	}
+}

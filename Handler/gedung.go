@@ -6,42 +6,33 @@ import (
 	"InternBCC/sdk"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
 func FindAllGedung(c *gin.Context) {
 	var get []entity.Gedung
-	type disp struct {
-		ID        uint
-		Nama      string
-		Kecamatan string
-		Harga     int
-		Alamat    string
-	}
 
-	var result []disp
-	if err := database.DB.Model(&get).Find(&result).Error; err != nil {
+	//var result []disp
+	if err := database.DB.Preload("Links").Find(&get).Error; err != nil {
 		sdk.FailOrError(c, http.StatusInternalServerError, "Failed to load data", err)
 		return
 	}
-	//var links []entity.Link
-	//if err := database.DB.Find(&links); err != nil {
-	//	for _, link := range links {
-	//		fmt.Println(link.ID)
-	//	}
-	//}
-	sdk.Success(c, 200, "Data found", result)
+
+	sdk.Success(c, 200, "Data found", get)
 }
 
 func GetGedungByID(c *gin.Context) {
-	id := c.Param("id")
+	idstr := c.Param("id")
+	id, _ := strconv.Atoi(idstr)
 	var get entity.Gedung
-	if err := database.DB.First(&get, id).Error; err != nil {
+	if err := database.DB.Preload("Links").First(&get, id).Error; err != nil {
 		sdk.FailOrError(c, http.StatusNotFound, "Data not Found", err)
 		return
 	}
 	splitFasil := strings.Split(get.Fasilitas, ";")
 	splitTag := strings.Split(get.Tag, ";")
+
 	type fasil struct {
 		Nama      string
 		Alamat    string
@@ -51,6 +42,7 @@ func GetGedungByID(c *gin.Context) {
 		Luas      string
 		Fasilitas []string
 		Tag       []string
+		Links     []entity.Link
 		Aturan    string
 	}
 
@@ -62,6 +54,7 @@ func GetGedungByID(c *gin.Context) {
 		Kapasitas: get.Kapasitas,
 		Luas:      get.Luas,
 		Tag:       splitTag,
+		Links:     get.Links,
 		Fasilitas: splitFasil,
 		Aturan:    get.Aturan,
 	}

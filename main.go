@@ -4,6 +4,7 @@ import (
 	"InternBCC/Handler"
 	"InternBCC/database"
 	"InternBCC/middleware"
+	"InternBCC/model"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"log"
@@ -13,6 +14,12 @@ func main() {
 	err := godotenv.Load()
 	db := database.InitDB()
 	if err := database.DropTable(db, "Booking", "Gedung", "User"); err != nil {
+		panic(err)
+	}
+	if err := database.TruncateTableIgnoreFK(db, "gedungs"); err != nil {
+		panic(err)
+	}
+	if err := database.TruncateTableIgnoreFK(db, "links"); err != nil {
 		panic(err)
 	}
 	if err := database.Migrate(db); err != nil {
@@ -40,21 +47,18 @@ func main() {
 		})
 	})
 
-	//supClient := supabasestorageuploader.NewSupabaseClient(
-	//	"https://ontvftbxgsmzxwlqhsdn.supabase.co",
-	//	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9udHZmdGJ4Z3Ntenh3bHFoc2RuIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzg0MDgxMzQsImV4cCI6MTk5Mzk4NDEzNH0.7yypIF1_gkHACVRxolU2KjhLpdUumKw3OdaRtHSnB9Q",
-	//	"gambar-gedung",
-	//	"",
-	//)
-	//model.GDummy()
-	//model.LDummy()
+	model.GDummy()
+	model.LDummy()
 	v0 := r.Group("/v0")
 	v0.POST("/register", Handler.Register)
 	v0.POST("/login", Handler.LogIn)
 	v0.GET("/validate", middleware.JwtMiddleware(), Handler.Validate)
+	v0.PATCH("/update", middleware.JwtMiddleware(), Handler.ChangeNameNumber)
 
 	v0.GET("/gedungs", Handler.FindAllGedung)
 	v0.GET("/gedungs/:id", Handler.GetGedungByID)
+	v0.GET("/history", middleware.JwtMiddleware(), Handler.GetHistory)
 	v0.POST("/booking/:id", middleware.JwtMiddleware(), Handler.Booking)
+	v0.POST("/payment/:id", middleware.JwtMiddleware(), Handler.Payment)
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }

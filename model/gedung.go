@@ -151,42 +151,122 @@ func GDummy() {
 func LDummy() {
 	L1 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Gracak.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL0dyYWNhay5zdmciLCJpYXQiOjE2Nzg0MzI0NzgsImV4cCI6MTY4MTAyNDQ3OH0.FT8mr1n6u5zLDsegHPVz7JXWERQyBZYjSxNzRR2en9M&t=2023-03-10T07%3A14%3A39.608Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/gracak%201.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL2dyYWNhayAxLnN2ZyIsImlhdCI6MTY3ODU5OTI5MCwiZXhwIjoxNjgxMTkxMjkwfQ.RHPZu51yEnEby5EcDXsXOHJ_-3Z_xNvtBKiOuY8WQOo&t=2023-03-12T05%3A34%3A52.438Z",
 		GedungID: 1,
 	}
 	L2 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/UMM.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL1VNTS5zdmciLCJpYXQiOjE2Nzg0MzU4MDksImV4cCI6MTY4MTAyNzgwOX0.1-wKESXerDMdnyukPyItXR8c4C8KTHrbsue6oZXwM9I&t=2023-03-10T08%3A10%3A09.942Z",
-		GedungID: 2,
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/gracak%202.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL2dyYWNhayAyLnN2ZyIsImlhdCI6MTY3ODU5OTM1MSwiZXhwIjoxNjgxMTkxMzUxfQ.W-DxllfRdui7pt-9nflhMv-832ReN36HqxKPIq9CUM0&t=2023-03-12T05%3A35%3A52.912Z",
+		GedungID: 1,
 	}
 	L3 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/UMM.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL1VNTS5zdmciLCJpYXQiOjE2Nzg0MzU4MDksImV4cCI6MTY4MTAyNzgwOX0.1-wKESXerDMdnyukPyItXR8c4C8KTHrbsue6oZXwM9I&t=2023-03-10T08%3A10%3A09.942Z",
-		GedungID: 3,
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/gracak%203.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL2dyYWNhayAzLnN2ZyIsImlhdCI6MTY3ODU5OTM3MywiZXhwIjoxNjgxMTkxMzczfQ.ByNbQlrmtVD49JQ5CmgBk8YidgaGC0EKnwlkZPTYRhE&t=2023-03-12T05%3A36%3A15.461Z",
+		GedungID: 1,
 	}
 	L4 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Skodamm.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL1Nrb2RhbW0uc3ZnIiwiaWF0IjoxNjc4NDM2NzYxLCJleHAiOjE2ODEwMjg3NjF9.VIMwyqLS83KWtp_WsQWRu5VLF1nTwZBOhE_nzpw15iI&t=2023-03-10T08%3A26%3A02.383Z",
-		GedungID: 4,
+		Link:     "",
+		GedungID: 2,
 	}
 	L5 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Polinema.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL1BvbGluZW1hLnN2ZyIsImlhdCI6MTY3ODQzNjc4NCwiZXhwIjoxNjgxMDI4Nzg0fQ.68ovpOQcCyVLk4jpdwqSiAB7JxJnONStKDH8d-aeTZM&t=2023-03-10T08%3A26%3A25.147Z",
-		GedungID: 5,
+		Link:     "",
+		GedungID: 2,
 	}
 	L6 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Widyagama%20(2).svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL1dpZHlhZ2FtYSAoMikuc3ZnIiwiaWF0IjoxNjc4NDM2NzM4LCJleHAiOjE2ODEwMjg3Mzh9.89jcwWpQfMalBqyhp--Lxlnsc19ll5k0OweYZt6Uxi0&t=2023-03-10T08%3A25%3A39.032Z",
-		GedungID: 6,
+		Link:     "",
+		GedungID: 2,
 	}
 	L7 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Atria%20Ballroom.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL0F0cmlhIEJhbGxyb29tLnN2ZyIsImlhdCI6MTY3ODQzNjgwNSwiZXhwIjoxNjgxMDI4ODA1fQ._VRWEXpbIcdmpXlrCylWTW3oQD4_QP-TQhsCMhaSdTo&t=2023-03-10T08%3A26%3A46.331Z",
-		GedungID: 7,
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Ijen%201.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL0lqZW4gMS5zdmciLCJpYXQiOjE2Nzg1OTk1MDgsImV4cCI6MTY4MTE5MTUwOH0.y9ZXkL3AUo5bwb5r6Mr7RE-UCXdnTYpvVrRXXVk2R1Q&t=2023-03-12T05%3A38%3A30.616Z",
+		GedungID: 3,
 	}
 	L8 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Harris%20Conve.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL0hhcnJpcyBDb252ZS5zdmciLCJpYXQiOjE2Nzg0MzY4MDgsImV4cCI6MTY4MTAyODgwOH0.af4O9Sd4QTYSgGu5_PQyXgW5WKV01wS4jywg2UUOzUA&t=2023-03-10T08%3A26%3A49.209Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Ijen%202.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL0lqZW4gMi5zdmciLCJpYXQiOjE2Nzg1OTk1MzMsImV4cCI6MTY4MTE5MTUzM30.vfVOTkyxAcqMXnbGiJFjCcsXCEiwbqOXTzwx_W20ONc&t=2023-03-12T05%3A38%3A55.781Z",
+		GedungID: 3,
+	}
+	L9 := entity.Link{
+		Model:    gorm.Model{},
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Ijen%203.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL0lqZW4gMy5zdmciLCJpYXQiOjE2Nzg1OTk1NTUsImV4cCI6MTY4MTE5MTU1NX0.ph_fvY_a4GwTOoSD72Phm0WRY0Rpfjk-WLSA_BsdODQ&t=2023-03-12T05%3A39%3A17.754Z",
+		GedungID: 3,
+	}
+	L10 := entity.Link{
+		Model:    gorm.Model{},
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/skodam%202.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL3Nrb2RhbSAyLnN2ZyIsImlhdCI6MTY3ODU5OTU4NywiZXhwIjoxNjgxMTkxNTg3fQ.2GgtgXrh2Czlxag1ZjAyqrIOQEVpxEd1q3ykVit3El4&t=2023-03-12T05%3A39%3A49.521Z",
+		GedungID: 4,
+	}
+	L11 := entity.Link{
+		Model:    gorm.Model{},
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/skodam%203.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL3Nrb2RhbSAzLnN2ZyIsImlhdCI6MTY3ODU5OTYwNCwiZXhwIjoxNjgxMTkxNjA0fQ.zOaGkJnd7F7pylQJrX5fU1OgodB8jbH_Tyhn5s0kZkc&t=2023-03-12T05%3A40%3A06.683Z",
+		GedungID: 4,
+	}
+	L12 := entity.Link{
+		Model:    gorm.Model{},
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/skodam%201.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL3Nrb2RhbSAxLnN2ZyIsImlhdCI6MTY3ODU5OTYxNCwiZXhwIjoxNjgxMTkxNjE0fQ.xirOeJAjQ1BszY5YIsp4urFfnbvX2p3iAPKohiTE0qA&t=2023-03-12T05%3A40%3A16.797Z",
+		GedungID: 4,
+	}
+	L13 := entity.Link{
+		Model:    gorm.Model{},
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Poli%201.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL1BvbGkgMS5zdmciLCJpYXQiOjE2Nzg1OTk2NDEsImV4cCI6MTY4MTE5MTY0MX0._ZJ3QTW6Oy82ql6SBVphhyvo8bUrVn2pGTJ1rSQI3bk&t=2023-03-12T05%3A40%3A43.872Z",
+		GedungID: 5,
+	}
+	L14 := entity.Link{
+		Model:    gorm.Model{},
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Poli%201.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL1BvbGkgMS5zdmciLCJpYXQiOjE2Nzg1OTk2NDEsImV4cCI6MTY4MTE5MTY0MX0._ZJ3QTW6Oy82ql6SBVphhyvo8bUrVn2pGTJ1rSQI3bk&t=2023-03-12T05%3A40%3A43.872Z",
+		GedungID: 5,
+	}
+	L15 := entity.Link{
+		Model:    gorm.Model{},
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Poli%203.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL1BvbGkgMy5zdmciLCJpYXQiOjE2Nzg1OTk2NjQsImV4cCI6MTY4MTE5MTY2NH0.tAr4Tnw833B2FXiOp5R1E0JToVkV99nHINIR_DACsNE&t=2023-03-12T05%3A41%3A06.076Z",
+		GedungID: 5,
+	}
+	L16 := entity.Link{
+		Model:    gorm.Model{},
+		Link:     "",
+		GedungID: 6,
+	}
+	L17 := entity.Link{
+		Model:    gorm.Model{},
+		Link:     "",
+		GedungID: 6,
+	}
+	L18 := entity.Link{
+		Model:    gorm.Model{},
+		Link:     "",
+		GedungID: 6,
+	}
+	L19 := entity.Link{
+		Model:    gorm.Model{},
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Poli%203.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL1BvbGkgMy5zdmciLCJpYXQiOjE2Nzg1OTk2NjQsImV4cCI6MTY4MTE5MTY2NH0.tAr4Tnw833B2FXiOp5R1E0JToVkV99nHINIR_DACsNE&t=2023-03-12T05%3A41%3A06.076Z",
+		GedungID: 7,
+	}
+	L20 := entity.Link{
+		Model:    gorm.Model{},
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Atria%202.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL0F0cmlhIDIuc3ZnIiwiaWF0IjoxNjc4NTk5NzA5LCJleHAiOjE2ODExOTE3MDl9.oSlAcs7XqO0lFNN0G1BFKGRH_dA9B5Sx0gK1mN-QW9M&t=2023-03-12T05%3A41%3A50.965Z",
+		GedungID: 7,
+	}
+	L21 := entity.Link{
+		Model:    gorm.Model{},
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Atria%202.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL0F0cmlhIDIuc3ZnIiwiaWF0IjoxNjc4NTk5NzA5LCJleHAiOjE2ODExOTE3MDl9.oSlAcs7XqO0lFNN0G1BFKGRH_dA9B5Sx0gK1mN-QW9M&t=2023-03-12T05%3A41%3A50.965Z",
+		GedungID: 7,
+	}
+	L22 := entity.Link{
+		Model:    gorm.Model{},
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Harris%201.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL0hhcnJpcyAxLnN2ZyIsImlhdCI6MTY3ODU5OTc0NSwiZXhwIjoxNjgxMTkxNzQ1fQ.sK1c6FeeXV4v-NSXzlBp-JGKQjhSTPph0HIxuU6cs5w&t=2023-03-12T05%3A42%3A27.730Z",
+		GedungID: 8,
+	}
+	L23 := entity.Link{
+		Model:    gorm.Model{},
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Harris%202.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL0hhcnJpcyAyLnN2ZyIsImlhdCI6MTY3ODU5OTc1MCwiZXhwIjoxNjgxMTkxNzUwfQ._TS0X_5GbFbeQ2NaGWb9IPnGyoIaYerdGNPC7xZ-2Jc&t=2023-03-12T05%3A42%3A32.013Z",
+		GedungID: 8,
+	}
+	L24 := entity.Link{
+		Model:    gorm.Model{},
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Harris%203.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL0hhcnJpcyAzLnN2ZyIsImlhdCI6MTY3ODU5OTc1MywiZXhwIjoxNjgxMTkxNzUzfQ.nPOYaf1H1HHLROLF5gpjzYWnbAodp9N59opi6jftcCk&t=2023-03-12T05%3A42%3A35.009Z",
 		GedungID: 8,
 	}
 	if err := database.DB.Create(&L1).Error; err != nil {
@@ -211,6 +291,54 @@ func LDummy() {
 		fmt.Println(err.Error())
 	}
 	if err := database.DB.Create(&L8).Error; err != nil {
+		fmt.Println(err.Error())
+	}
+	if err := database.DB.Create(&L9).Error; err != nil {
+		fmt.Println(err.Error())
+	}
+	if err := database.DB.Create(&L10).Error; err != nil {
+		fmt.Println(err.Error())
+	}
+	if err := database.DB.Create(&L11).Error; err != nil {
+		fmt.Println(err.Error())
+	}
+	if err := database.DB.Create(&L12).Error; err != nil {
+		fmt.Println(err.Error())
+	}
+	if err := database.DB.Create(&L13).Error; err != nil {
+		fmt.Println(err.Error())
+	}
+	if err := database.DB.Create(&L14).Error; err != nil {
+		fmt.Println(err.Error())
+	}
+	if err := database.DB.Create(&L15).Error; err != nil {
+		fmt.Println(err.Error())
+	}
+	if err := database.DB.Create(&L16).Error; err != nil {
+		fmt.Println(err.Error())
+	}
+	if err := database.DB.Create(&L17).Error; err != nil {
+		fmt.Println(err.Error())
+	}
+	if err := database.DB.Create(&L18).Error; err != nil {
+		fmt.Println(err.Error())
+	}
+	if err := database.DB.Create(&L19).Error; err != nil {
+		fmt.Println(err.Error())
+	}
+	if err := database.DB.Create(&L20).Error; err != nil {
+		fmt.Println(err.Error())
+	}
+	if err := database.DB.Create(&L21).Error; err != nil {
+		fmt.Println(err.Error())
+	}
+	if err := database.DB.Create(&L22).Error; err != nil {
+		fmt.Println(err.Error())
+	}
+	if err := database.DB.Create(&L23).Error; err != nil {
+		fmt.Println(err.Error())
+	}
+	if err := database.DB.Create(&L24).Error; err != nil {
 		fmt.Println(err.Error())
 	}
 
