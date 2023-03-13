@@ -22,15 +22,19 @@ func Booking(c *gin.Context) {
 	GeID, _ := strconv.Atoi(GeIDStr)
 	//statusbad
 	var req model.Booking
-	if err := c.Bind(&req); err != nil {
+	if err := c.BindJSON(&req); err != nil {
 		sdk.FailOrError(c, http.StatusBadRequest, "Lengkapi isian Anda", err)
 		return
 	}
-	waktu := req.Tanggal
-	waktu = waktu.Truncate(24 * time.Hour)
+	tglStr := req.Tanggal
+	template := "2006-01-02"
+	parsed, err := time.Parse(template, tglStr)
+	if err != nil {
+		sdk.FailOrError(c, http.StatusInternalServerError, "Failed to parse", err)
+	}
 	var get = entity.Booking{
 		Nama:      req.Nama,
-		Tanggal:   waktu,
+		Tanggal:   parsed,
 		Keperluan: req.Keperluan,
 		Nomer:     req.Nomor,
 		Alamat:    req.Alamat,
