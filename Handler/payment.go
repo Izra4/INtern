@@ -21,7 +21,7 @@ func Payment(c *gin.Context) {
 		"https://ontvftbxgsmzxwlqhsdn.supabase.co",
 		"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9udHZmdGJ4Z3Ntenh3bHFoc2RuIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzg0MDgxMzQsImV4cCI6MTk5Mzk4NDEzNH0.7yypIF1_gkHACVRxolU2KjhLpdUumKw3OdaRtHSnB9Q",
 		"gambar-gedung",
-		"Pembayaran",
+		"",
 	)
 	file, err := c.FormFile("bukti")
 	if err != nil {

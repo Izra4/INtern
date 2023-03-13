@@ -5,7 +5,6 @@ import (
 	"InternBCC/entity"
 	"InternBCC/sdk"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"net/http"
 	"strconv"
 	"strings"
@@ -15,19 +14,35 @@ func FindAllGedung(c *gin.Context) {
 	var get []entity.Gedung
 
 	//var result []disp
-	if err := database.DB.Debug().
-		Preload("Links", func(db *gorm.DB) *gorm.DB {
-			return db.Limit(1) // set limit to 1 for Model2
-		}).
-		Find(&get).Error; err != nil {
+	if err := database.DB.Debug().Preload("Links").Find(&get).Error; err != nil {
 		sdk.FailOrError(c, http.StatusInternalServerError, "Failed to load data", err)
 		return
 	}
 
+	type req struct {
+		Id        uint   `json:"id"`
+		Nama      string `json:"nama"`
+		Alamat    string `json:"alamat"`
+		Kecamatan string `json:"kecamatan"`
+		Harga     int    `json:"harga"`
+		Link      string `json:"link"`
+	}
+
+	var result []req
+	for _, value := range get {
+		var temp req
+		temp.Id = value.ID
+		temp.Nama = value.Nama
+		temp.Alamat = value.Alamat
+		temp.Kecamatan = value.Kecamatan
+		temp.Harga = value.Harga
+		temp.Link = value.Links[0].Link
+		result = append(result, temp)
+	}
+	sdk.Success(c, 200, "Data found", result)
 	//if err := database.DB.Preload("Links").Select("nama, alamat, kecamatan, harga, Links").Find(&get).Error; err != nil {
 	//	sdk.FailOrError(c, http.StatusInternalServerError, "Error to get Data", err)
 	//}
-	sdk.Success(c, 200, "Data found", get)
 }
 
 func GetGedungByID(c *gin.Context) {
