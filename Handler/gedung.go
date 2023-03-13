@@ -66,10 +66,13 @@ func GetGedungByID(c *gin.Context) {
 		Luas      string
 		Fasilitas []string
 		Tag       []string
-		Links     []entity.Link
+		Links     []string
 		Aturan    []string
 	}
-
+	var links []string
+	for _, link := range get.Links {
+		links = append(links, link.Link)
+	}
 	var result = fasil{
 		Nama:      get.Nama,
 		Alamat:    get.Alamat,
@@ -78,7 +81,7 @@ func GetGedungByID(c *gin.Context) {
 		Kapasitas: get.Kapasitas,
 		Luas:      get.Luas,
 		Tag:       splitTag,
-		Links:     get.Links,
+		Links:     links,
 		Fasilitas: splitFasil,
 		Aturan:    splitAturan,
 	}

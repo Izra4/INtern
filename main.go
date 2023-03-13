@@ -46,7 +46,7 @@ func main() {
 	v0.POST("/register", Handler.Register)
 	v0.POST("/login", Handler.LogIn)
 	v0.GET("/validate", middleware.JwtMiddleware(), Handler.Validate)
-	//v0.PUT("/update", middleware.JwtMiddleware(), Handler.ChangeNameNumber)
+	v0.PUT("/update", middleware.JwtMiddleware(), Handler.ChangeNameNumber)
 	v0.PUT("/change-pass", middleware.JwtMiddleware(), Handler.ChangePass)
 	v0.POST("/delete-account", middleware.JwtMiddleware(), Handler.DeleteAccount)
 

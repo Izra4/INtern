@@ -7,8 +7,10 @@ import (
 	"InternBCC/sdk"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+	"math/rand"
 	"net/http"
 	"strings"
+	"time"
 )
 
 func upperCase(pass string) bool {
@@ -125,27 +127,28 @@ func Validate(c *gin.Context) {
 	sdk.Success(c, http.StatusOK, "Logged In", user)
 }
 
-//func ChangeNameNumber(c *gin.Context) {
-//	type changes struct {
-//		Email string `json:"email"`
-//		Nama  string `json:"nama"`
-//		Nomor string `json:"nomor"`
-//	}
-//	userId := c.MustGet("user")
-//	claims := userId.(model.UserClaims)
-//
-//	var req changes
-//	if err := c.BindJSON(&req); err != nil {
-//		sdk.FailOrError(c, http.StatusInternalServerError, "Error to Read", err)
-//		return
-//	}
-//	if err := database.DB.Model(&users).Where("id = ?", claims.ID).Updates(req).Error; err != nil {
-//		sdk.FailOrError(c, http.StatusInternalServerError, "error", err)
-//		return
-//	}
-//
-//	sdk.Success(c, http.StatusOK, "Profil telah diperbarui", users)
-//}
+func ChangeNameNumber(c *gin.Context) {
+	type changes struct {
+		Email string `json:"email"`
+		Nama  string `json:"nama"`
+		Nomor string `json:"nomor"`
+	}
+	userId := c.MustGet("user")
+	claims := userId.(model.UserClaims)
+
+	var req changes
+	if err := c.BindJSON(&req); err != nil {
+		sdk.FailOrError(c, http.StatusInternalServerError, "Error to Read", err)
+		return
+	}
+	var user entity.User
+	if err := database.DB.Model(&user).Where("id = ?", claims.ID).Updates(req).Error; err != nil {
+		sdk.FailOrError(c, http.StatusInternalServerError, "error", err)
+		return
+	}
+
+	sdk.Success(c, http.StatusOK, "Profil telah diperbarui", user)
+}
 
 func ChangePass(c *gin.Context) {
 	id, _ := c.Get("user")
@@ -196,6 +199,19 @@ func ChangePass(c *gin.Context) {
 	sdk.Success(c, http.StatusOK, "Password berhasil dirubah", user)
 }
 
+func randomString(length int) string {
+	var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+	rand.Seed(time.Now().UnixNano())
+
+	b := make([]rune, length)
+	for i := range b {
+		b[i] = letterRunes[rand.Intn(len(letterRunes))]
+	}
+
+	return string(b)
+}
+
 func DeleteAccount(c *gin.Context) {
 	type pass struct {
 		Password string `json:"password" binding:"required"`
@@ -220,9 +236,15 @@ func DeleteAccount(c *gin.Context) {
 		sdk.FailOrError(c, http.StatusBadRequest, "Password Anda Salah", err)
 		return
 	}
+	user.Email = randomString(10)
+	if err := database.DB.Save(&user).Error; err != nil {
+		sdk.FailOrError(c, http.StatusInternalServerError, "Failed to save email", err)
+		return
+	}
 	if err := database.DB.Delete(&user).Error; err != nil {
 		sdk.FailOrError(c, http.StatusInternalServerError, "Gagal menghapus akun Anda", err)
 		return
 	}
 	sdk.Success(c, http.StatusOK, "Akun Anda telah terhapus", user)
+
 }
