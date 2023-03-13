@@ -122,31 +122,107 @@ func Validate(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"data":    user,
-		"error":   nil,
-		"message": "logged in",
-	})
+	sdk.Success(c, http.StatusOK, "Logged In", user)
 }
 
-func ChangeNameNumber(c *gin.Context) {
+//func ChangeNameNumber(c *gin.Context) {
+//	type changes struct {
+//		Email string `json:"email"`
+//		Nama  string `json:"nama"`
+//		Nomor string `json:"nomor"`
+//	}
+//	userId := c.MustGet("user")
+//	claims := userId.(model.UserClaims)
+//
+//	var req changes
+//	if err := c.BindJSON(&req); err != nil {
+//		sdk.FailOrError(c, http.StatusInternalServerError, "Error to Read", err)
+//		return
+//	}
+//	if err := database.DB.Model(&users).Where("id = ?", claims.ID).Updates(req).Error; err != nil {
+//		sdk.FailOrError(c, http.StatusInternalServerError, "error", err)
+//		return
+//	}
+//
+//	sdk.Success(c, http.StatusOK, "Profil telah diperbarui", users)
+//}
+
+func ChangePass(c *gin.Context) {
+	id, _ := c.Get("user")
+	claims := id.(model.UserClaims)
+
+	var user entity.User
+	if err := database.DB.First(&user, claims.ID).Error; err != nil {
+		sdk.FailOrError(c, http.StatusNotFound, "User not found", err)
+		return
+	}
 	var req struct {
-		Nama  string `json:"nama"`
-		Nomor string `json:"nomor"`
+		OldPass string `json:"old_pass" binding:"required"`
+		NewPass string `json:"new_pass" binding:"required"`
+		Confirm string `json:"confirm" binding:"required"`
 	}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		sdk.FailOrError(c, http.StatusBadRequest, "Mohon lengkapi datanya", err)
+		return
+	}
+	if err := sdk.ValidateHash(user.Password, req.OldPass); err != nil {
+		sdk.FailOrError(c, http.StatusBadRequest, "Failed to compare the password", err)
+		return
+	}
+	if (!upperCase(req.NewPass)) || (!hasNum(req.NewPass)) {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  "fail",
+			"message": "Password harus mengandung 1 huruf kapital dan 1 angka",
+		})
+		return
+	}
+	if (req.NewPass != req.Confirm) || (len(req.NewPass) < 8) {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  "fail",
+			"message": "Password tidak sama / kurang dari 8 karakter",
+		})
+		return
+	}
+
+	hash, err := sdk.Hashing(req.NewPass)
+	if err != nil {
+		sdk.FailOrError(c, http.StatusInternalServerError, "Failed to Hash", err)
+		return
+	}
+	if err := database.DB.Model(&user).Update("password", hash).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update password"})
+		return
+	}
+	sdk.Success(c, http.StatusOK, "Password berhasil dirubah", user)
+}
+
+func DeleteAccount(c *gin.Context) {
+	type pass struct {
+		Password string `json:"password" binding:"required"`
+	}
+	id := c.MustGet("user")
+	claims := id.(model.UserClaims)
+
+	var req pass
 	if err := c.BindJSON(&req); err != nil {
-		sdk.FailOrError(c, http.StatusInternalServerError, "Error to Read", err)
+		sdk.FailOrError(c, http.StatusBadRequest, "Mohon mengisi password Anda", err)
 		return
 	}
-	var users entity.User
-	if req.Nama != "" {
-		users.Nama = req.Nama
-	}
-	if req.Nomor != "" {
-		users.Number = req.Nomor
-	}
-	if err := database.DB.Save(&users).Error; err != nil {
-		sdk.FailOrError(c, http.StatusAccepted, "Data telah diupdate", err)
+
+	var user entity.User
+	if err := database.DB.Where("id = ?", claims.ID).First(&user).Error; err != nil {
+		sdk.FailOrError(c, http.StatusNotFound, "User not found", err)
 		return
 	}
+
+	err := sdk.ValidateHash(user.Password, req.Password)
+	if err != nil {
+		sdk.FailOrError(c, http.StatusBadRequest, "Password Anda Salah", err)
+		return
+	}
+	if err := database.DB.Delete(&user).Error; err != nil {
+		sdk.FailOrError(c, http.StatusInternalServerError, "Gagal menghapus akun Anda", err)
+		return
+	}
+	sdk.Success(c, http.StatusOK, "Akun Anda telah terhapus", user)
 }
