@@ -49,3 +49,33 @@ func Booking(c *gin.Context) {
 	sdk.Success(c, 200, "Booking telah dibuat", get)
 
 }
+
+func GetBookingData(c *gin.Context) {
+	type body struct {
+		Nama      string `json:"nama"`
+		Tanggal   string `json:"tanggal"`
+		Keperluan string `json:"keperluan"`
+		Nomor     string `json:"nomor"`
+		Alamat    string `json:"alamat"`
+	}
+	id, _ := c.Get("user")
+	claims := id.(model.UserClaims)
+
+	var get entity.Booking
+	if err := database.DB.Where("user_id = ?", claims.ID).Last(&get).Error; err != nil {
+		sdk.FailOrError(c, http.StatusNotFound, "Data not found", err)
+		return
+	}
+
+	waktu := get.Tanggal
+	format := waktu.Format("2006-01-02")
+
+	result := body{
+		Nama:      get.Nama,
+		Tanggal:   format,
+		Keperluan: get.Keperluan,
+		Nomor:     get.Nomer,
+		Alamat:    get.Alamat,
+	}
+	sdk.Success(c, http.StatusOK, "Data found", result)
+}
