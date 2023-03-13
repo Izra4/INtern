@@ -4,7 +4,7 @@ import "time"
 
 type Booking struct {
 	Nama      string    `json:"nama" binding:"required"`
-	Tanggal   time.Time `json:"tanggal" binding:"required"`
+	Tanggal   time.Time `json:"tanggal" binding:"required" type:"date"`
 	Keperluan string    `json:"keperluan" binding:"required"`
 	Nomor     string    `json:"nomor" binding:"required"`
 	Alamat    string    `json:"alamat" binding:"required"`
