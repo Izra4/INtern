@@ -56,5 +56,5 @@ func main() {
 	v1.POST("/booking/:id", middleware.JwtMiddleware(), Handler.Booking)
 	v1.GET("/booking-details", middleware.JwtMiddleware(), Handler.GetBookingData)
 	v1.POST("/payment/:id", middleware.JwtMiddleware(), Handler.Payment)
-	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	r.Run()
 }
