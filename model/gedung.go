@@ -15,15 +15,15 @@ func GDummy() {
 		Kecamatan: "Lowokwaru",
 		Fasilitas: "Area parki basement;Area parkir central park(500 mobil);Loket;Toilet;Dapur;Backstage;Ruang transit; Gudang; Tribune; Properti gedung: AC, genset, lighting, smoke, sound system, WIFI, CCTV",
 		Aturan:    "Dilarang membawa barang yang memicu kebakaran",
-		Harga:     3000000,
+		Harga:     30000000,
 		Kapasitas: "8.000 Orang",
 		Luas:      "4.356 m2",
-		Tag:       "Wisuda;seminar;konser;pernikahan",
+		Tag:       "Wisuda;Seminar;Konser;Pernikahan",
 		Bookings:  nil,
 	}
 	G2 := entity.Gedung{
 		Model:     gorm.Model{},
-		Nama:      "Dome UMM",
+		Nama:      "UMM Dome",
 		Alamat:    " Jl. Karyawiguna No.90, Babatan, Tegalgondo, Kec. Karang Ploso, Kabupaten Malang, Jawa Timur",
 		Kecamatan: "Karang Ploso",
 		Fasilitas: "Ruang operator;Toilet;Backstage;Ruang panel listrik;Gudang;Tribune;Ruang teater;Proper gedung:sound system, AC, LCD",
@@ -31,12 +31,12 @@ func GDummy() {
 		Kapasitas: "6.000 Orang",
 		Luas:      "1.709 m2",
 		Aturan:    "Tidak menyajikan sexy dancer",
-		Tag:       "konser;pernikahan;pameran",
+		Tag:       "Konser;Pernikahan;Pameran",
 		Bookings:  nil,
 	}
 	G3 := entity.Gedung{
 		Model:     gorm.Model{},
-		Nama:      "Grand ballroom ijen suite",
+		Nama:      "Grand Ballroom Ijen Suite",
 		Alamat:    "Jl. Ijen Nirwana Raya Blok A No.16, Bareng, Kec. Klojen, Kota Malang, Jawa Timur",
 		Kecamatan: "Klojen",
 		Fasilitas: "Kursi 500 buah; Karpet lantai;AC;Toilet",
@@ -49,7 +49,7 @@ func GDummy() {
 	}
 	G4 := entity.Gedung{
 		Model:     gorm.Model{},
-		Nama:      "Graha skodam V brawijaya",
+		Nama:      "Graha Skodam V Brawijaya",
 		Alamat:    "Jl. Tugu No.2, Klojen, Kec. Klojen, Kota Malang, Jawa Timur",
 		Kecamatan: "Klojen",
 		Harga:     5900000,
@@ -62,7 +62,7 @@ func GDummy() {
 	}
 	G5 := entity.Gedung{
 		Model:     gorm.Model{},
-		Nama:      "Graha polinema",
+		Nama:      "Graha Polinema",
 		Alamat:    "Jl. Soekarno Hatta No.9, Jatimulyo, Kec. Lowokwaru, Kota Malang, Jawa Timur",
 		Kecamatan: "Lowokwaru",
 		Harga:     7000000,
@@ -89,7 +89,7 @@ func GDummy() {
 
 	G7 := entity.Gedung{
 		Model:     gorm.Model{},
-		Nama:      "Atria grand paramount ballroom",
+		Nama:      "Atria Grand Paramount Ballroom",
 		Alamat:    "Jl. Letjend S. Parman No.87 - 89, Purwantoro, Kec. Blimbing, Kota Malang, Jawa Timur",
 		Kecamatan: "Blimbing",
 		Harga:     60000000,
@@ -151,32 +151,32 @@ func GDummy() {
 func LDummy() {
 	L1 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/gracak%201.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL2dyYWNhayAxLnN2ZyIsImlhdCI6MTY3ODU5OTI5MCwiZXhwIjoxNjgxMTkxMjkwfQ.RHPZu51yEnEby5EcDXsXOHJ_-3Z_xNvtBKiOuY8WQOo&t=2023-03-12T05%3A34%3A52.438Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/gracak%201.svg?t=2023-03-14T14%3A47%3A18.587Z",
 		GedungID: 1,
 	}
 	L2 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/gracak%202.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL2dyYWNhayAyLnN2ZyIsImlhdCI6MTY3ODU5OTM1MSwiZXhwIjoxNjgxMTkxMzUxfQ.W-DxllfRdui7pt-9nflhMv-832ReN36HqxKPIq9CUM0&t=2023-03-12T05%3A35%3A52.912Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/gracak%202.svg?t=2023-03-14T14%3A47%3A21.696Z",
 		GedungID: 1,
 	}
 	L3 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/gracak%203.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL2dyYWNhayAzLnN2ZyIsImlhdCI6MTY3ODU5OTM3MywiZXhwIjoxNjgxMTkxMzczfQ.ByNbQlrmtVD49JQ5CmgBk8YidgaGC0EKnwlkZPTYRhE&t=2023-03-12T05%3A36%3A15.461Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/gracak%203.svg?t=2023-03-14T14%3A47%3A24.346Z",
 		GedungID: 1,
 	}
 	L4 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/widya%203.svg",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/umm%201.svg",
 		GedungID: 2,
 	}
 	L5 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/umm%202.svg?t=2023-03-14T13%3A06%3A49.918Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/umm%202.svg",
 		GedungID: 2,
 	}
 	L6 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/umm%203.svg?t=2023-03-14T13%3A06%3A56.102Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/umm%203.svg",
 		GedungID: 2,
 	}
 	L7 := entity.Link{
@@ -196,42 +196,42 @@ func LDummy() {
 	}
 	L10 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/skodam%202.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL3Nrb2RhbSAyLnN2ZyIsImlhdCI6MTY3ODU5OTU4NywiZXhwIjoxNjgxMTkxNTg3fQ.2GgtgXrh2Czlxag1ZjAyqrIOQEVpxEd1q3ykVit3El4&t=2023-03-12T05%3A39%3A49.521Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/skodam%201.svg",
 		GedungID: 4,
 	}
 	L11 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/skodam%203.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL3Nrb2RhbSAzLnN2ZyIsImlhdCI6MTY3ODU5OTYwNCwiZXhwIjoxNjgxMTkxNjA0fQ.zOaGkJnd7F7pylQJrX5fU1OgodB8jbH_Tyhn5s0kZkc&t=2023-03-12T05%3A40%3A06.683Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/skodam%202.svg?t=2023-03-14T14%3A51%3A22.302Z",
 		GedungID: 4,
 	}
 	L12 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/skodam%201.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL3Nrb2RhbSAxLnN2ZyIsImlhdCI6MTY3ODU5OTYxNCwiZXhwIjoxNjgxMTkxNjE0fQ.xirOeJAjQ1BszY5YIsp4urFfnbvX2p3iAPKohiTE0qA&t=2023-03-12T05%3A40%3A16.797Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/skodam%203.svg?t=2023-03-14T14%3A51%3A19.979Z",
 		GedungID: 4,
 	}
 	L13 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Poli%201.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL1BvbGkgMS5zdmciLCJpYXQiOjE2Nzg1OTk2NDEsImV4cCI6MTY4MTE5MTY0MX0._ZJ3QTW6Oy82ql6SBVphhyvo8bUrVn2pGTJ1rSQI3bk&t=2023-03-12T05%3A40%3A43.872Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/Poli%201.svg?t=2023-03-14T14%3A52%3A55.339Z",
 		GedungID: 5,
 	}
 	L14 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Poli%201.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL1BvbGkgMS5zdmciLCJpYXQiOjE2Nzg1OTk2NDEsImV4cCI6MTY4MTE5MTY0MX0._ZJ3QTW6Oy82ql6SBVphhyvo8bUrVn2pGTJ1rSQI3bk&t=2023-03-12T05%3A40%3A43.872Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/Poli%202.svg?t=2023-03-14T14%3A52%3A53.045Z",
 		GedungID: 5,
 	}
 	L15 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Poli%203.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL1BvbGkgMy5zdmciLCJpYXQiOjE2Nzg1OTk2NjQsImV4cCI6MTY4MTE5MTY2NH0.tAr4Tnw833B2FXiOp5R1E0JToVkV99nHINIR_DACsNE&t=2023-03-12T05%3A41%3A06.076Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/Poli%203.svg?t=2023-03-14T14%3A52%3A51.593Z",
 		GedungID: 5,
 	}
 	L16 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/widya%201.svg",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/widya%201.svg?t=2023-03-14T14%3A54%3A15.075Z",
 		GedungID: 6,
 	}
 	L17 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/widya%202.svg",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/widya%202.svg?t=2023-03-14T14%3A54%3A12.120Z",
 		GedungID: 6,
 	}
 	L18 := entity.Link{
@@ -241,32 +241,32 @@ func LDummy() {
 	}
 	L19 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/Atria%201.svg?t=2023-03-14T13%3A07%3A30.013Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/Atria%201.svg?t=2023-03-14T14%3A54%3A57.007Z",
 		GedungID: 7,
 	}
 	L20 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/Atria%202.svg?t=2023-03-14T13%3A07%3A53.424Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/Atria%202.svg?t=2023-03-14T14%3A54%3A54.719Z",
 		GedungID: 7,
 	}
 	L21 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/Atria%203.svg",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/Atria%203.svg?t=2023-03-14T14%3A54%3A53.228Z",
 		GedungID: 7,
 	}
 	L22 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Harris%201.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL0hhcnJpcyAxLnN2ZyIsImlhdCI6MTY3ODU5OTc0NSwiZXhwIjoxNjgxMTkxNzQ1fQ.sK1c6FeeXV4v-NSXzlBp-JGKQjhSTPph0HIxuU6cs5w&t=2023-03-12T05%3A42%3A27.730Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/Harris%201.svg?t=2023-03-14T14%3A55%3A33.407Z",
 		GedungID: 8,
 	}
 	L23 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Harris%202.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL0hhcnJpcyAyLnN2ZyIsImlhdCI6MTY3ODU5OTc1MCwiZXhwIjoxNjgxMTkxNzUwfQ._TS0X_5GbFbeQ2NaGWb9IPnGyoIaYerdGNPC7xZ-2Jc&t=2023-03-12T05%3A42%3A32.013Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/Harris%202.svg?t=2023-03-14T14%3A55%3A31.802Z",
 		GedungID: 8,
 	}
 	L24 := entity.Link{
 		Model:    gorm.Model{},
-		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/sign/gambar-gedung/Harris%203.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYW1iYXItZ2VkdW5nL0hhcnJpcyAzLnN2ZyIsImlhdCI6MTY3ODU5OTc1MywiZXhwIjoxNjgxMTkxNzUzfQ.nPOYaf1H1HHLROLF5gpjzYWnbAodp9N59opi6jftcCk&t=2023-03-12T05%3A42%3A35.009Z",
+		Link:     "https://ontvftbxgsmzxwlqhsdn.supabase.co/storage/v1/object/public/gambar-gedung/Harris%203.svg",
 		GedungID: 8,
 	}
 	if err := database.DB.Create(&L1).Error; err != nil {
