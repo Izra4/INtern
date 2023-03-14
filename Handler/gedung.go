@@ -40,9 +40,6 @@ func FindAllGedung(c *gin.Context) {
 		result = append(result, temp)
 	}
 	sdk.Success(c, 200, "Data found", result)
-	//if err := database.DB.Preload("Links").Select("nama, alamat, kecamatan, harga, Links").Find(&get).Error; err != nil {
-	//	sdk.FailOrError(c, http.StatusInternalServerError, "Error to get Data", err)
-	//}
 }
 
 func GetGedungByID(c *gin.Context) {
