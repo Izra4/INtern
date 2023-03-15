@@ -117,5 +117,9 @@ func GetHistory(c *gin.Context) {
 		temp.Status = value.Status
 		result = append(result, temp)
 	}
+	if len(result) == 0 {
+		sdk.Fail(c, http.StatusNotFound, "Anda belum melakukan pembaaran")
+		return
+	}
 	sdk.Success(c, http.StatusOK, "Data found", result)
 }

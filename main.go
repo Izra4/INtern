@@ -4,7 +4,6 @@ import (
 	"InternBCC/database"
 	"InternBCC/handler"
 	"InternBCC/middleware"
-	"InternBCC/model"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"log"
@@ -13,10 +12,6 @@ import (
 func main() {
 	err := godotenv.Load()
 	db := database.InitDB()
-	database.DropTable(db, "payments")
-	database.TruncateTableIgnoreFK(db, "gedungs")
-	database.TruncateTableIgnoreFK(db, "bookings")
-	database.TruncateTableIgnoreFK(db, "links")
 	if err := database.Migrate(db); err != nil {
 		log.Fatal("Failed to Migrate")
 	}
@@ -42,15 +37,15 @@ func main() {
 		})
 	})
 
-	model.GDummy()
-	model.LDummy()
+	//model.GDummy()
+	//model.LDummy()
 	v1 := r.Group("/v1")
 	v1.POST("/register", handler.Register)
 	v1.POST("/login", handler.LogIn)
 	v1.GET("/validate", middleware.JwtMiddleware(), handler.Validate)
-	v1.PUT("/update", middleware.JwtMiddleware(), handler.ChangeNameNumber)
+	v1.PUT("/profile/update", middleware.JwtMiddleware(), handler.ChangeNameNumber)
 	v1.PUT("/change-pass", middleware.JwtMiddleware(), handler.ChangePass)
-	v1.POST("/delete-account", middleware.JwtMiddleware(), handler.DeleteAccount)
+	v1.DELETE("/delete-account", middleware.JwtMiddleware(), handler.DeleteAccount)
 
 	v1.GET("/gedungs", handler.FindAllGedung)
 	v1.GET("/gedungs/:id", handler.GetGedungByID)

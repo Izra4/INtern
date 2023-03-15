@@ -16,6 +16,12 @@ func SearchByName(c *gin.Context) {
 			sdk.FailOrError(c, http.StatusNotFound, "Informasi gedung tidak ada", err)
 			return
 		}
+		if len(gedungs) == 0 {
+			c.JSON(http.StatusNotFound, gin.H{
+				"error": "Gedung tidak ditemukan",
+			})
+			return
+		}
 	} else {
 		if err := database.DB.Preload("Links").Find(&gedungs).Error; err != nil {
 			sdk.FailOrError(c, http.StatusNotFound, "Informasi gedung tidak ada", err)

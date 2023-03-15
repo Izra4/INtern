@@ -41,3 +41,23 @@ func FailOrError(c *gin.Context, httpCode int, msg string, err error) {
 		})
 	}
 }
+func Fail(c *gin.Context, httpCode int, msg string) {
+	switch httpCode / 100 {
+	case 4: //FAIL 4xx
+		c.JSON(httpCode, gin.H{
+			"status":  "fail",
+			"message": msg,
+		})
+	case 5: //ERROR 5xx
+		c.JSON(httpCode, gin.H{
+			"status":  "error",
+			"message": msg,
+		})
+
+	default:
+		c.JSON(500, gin.H{
+			"status":  "error",
+			"message": "RESPONSE ERROR",
+		})
+	}
+}

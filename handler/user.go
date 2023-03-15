@@ -136,17 +136,31 @@ func ChangeNameNumber(c *gin.Context) {
 	userId := c.MustGet("user")
 	claims := userId.(model.UserClaims)
 
+	var user entity.User
+	if err := database.DB.First(&user, claims.ID).Error; err != nil {
+		sdk.FailOrError(c, http.StatusNotFound, "User not found", err)
+		return
+	}
 	var req changes
 	if err := c.BindJSON(&req); err != nil {
 		sdk.FailOrError(c, http.StatusInternalServerError, "Error to Read", err)
 		return
 	}
-	var user entity.User
-	if err := database.DB.Model(&user).Where("id = ?", claims.ID).Updates(req).Error; err != nil {
-		sdk.FailOrError(c, http.StatusInternalServerError, "error", err)
-		return
+	if req.Email != "" {
+		user.Email = req.Email
 	}
 
+	if req.Nama != "" {
+		user.Nama = req.Nama
+	}
+
+	if req.Nomor != "" {
+		user.Number = req.Nomor
+	}
+	if err := database.DB.Save(&user).Error; err != nil {
+		sdk.FailOrError(c, http.StatusInternalServerError, "Failed to update user", err)
+		return
+	}
 	sdk.Success(c, http.StatusOK, "Profil telah diperbarui", user)
 }
 
