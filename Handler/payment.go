@@ -56,19 +56,15 @@ func Payment(c *gin.Context) {
 		sdk.FailOrError(c, http.StatusInternalServerError, "Failed to upload file", err)
 		return
 	}
-	type nominal struct {
-		Nominal int `json:"nominal"`
-	}
-	var price nominal
-	if err := c.Bind(&price); err != nil {
-		sdk.FailOrError(c, http.StatusInternalServerError, "Failed to read", err)
-	}
+
+	nominal := c.PostForm("nominal")
+	harga, err := strconv.Atoi(nominal)
 	var req = entity.Payment{
 		ID:       randomId(),
 		UserID:   claims.ID,
 		GedungID: uint(GedungId),
 		Link:     link,
-		Nominal:  price.Nominal,
+		Nominal:  harga,
 	}
 	if err := database.DB.Create(&req).Error; err != nil {
 		sdk.FailOrError(c, http.StatusBadRequest, "Mohon upload file bukti pembayaran", err)
@@ -80,9 +76,18 @@ func GetHistory(c *gin.Context) {
 	userId := c.MustGet("user")
 	claims := userId.(model.UserClaims)
 
-	var get []entity.Payment
-	if err := database.DB.Where("user_id = ?", claims.ID).Find(&get).Error; err != nil {
+	var get []struct {
+		entity.Payment
+		GedungName    string // nama gedung
+		GedungAddress string // alamat gedung
+	}
+	if err := database.DB.Joins("JOIN gedungs ON payments.gedung_id = gedungs.id").
+		Where("payment.user_id = ?", claims.ID).
+		Select("payment.*, gedungs.nama AS gedung_name").
+		Find(&get).
+		Error; err != nil {
 		sdk.FailOrError(c, http.StatusNotFound, "Data not found", err)
 	}
+
 	sdk.Success(c, http.StatusOK, "Data found", get)
 }
