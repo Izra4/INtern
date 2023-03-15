@@ -76,18 +76,42 @@ func GetHistory(c *gin.Context) {
 	userId := c.MustGet("user")
 	claims := userId.(model.UserClaims)
 
-	var get []struct {
-		entity.Payment
-		GedungName    string // nama gedung
-		GedungAddress string // alamat gedung
-	}
-	if err := database.DB.Joins("JOIN gedungs ON payments.gedung_id = gedungs.id").
-		Where("payment.user_id = ?", claims.ID).
-		Select("payment.*, gedungs.nama AS gedung_name").
-		Find(&get).
+	var get []entity.Payment
+	if err := database.DB.Where("user_id = ?", claims.ID).Find(&get).
 		Error; err != nil {
 		sdk.FailOrError(c, http.StatusNotFound, "Data not found", err)
 	}
 
-	sdk.Success(c, http.StatusOK, "Data found", get)
+	type body struct {
+		ID         string `json:"id"`
+		Tanggal    string `json:"tanggal"`
+		UserID     uint   `json:"user_id"`
+		GedungID   uint   `json:"gedung_id"`
+		NamaGedung string `json:"nama_gedung"`
+		LinkGedung string `json:"link_gedung"`
+		Link       string `json:"link"`
+		Nominal    int    `json:"nominal"`
+	}
+
+	var result []body
+	for _, value := range get {
+		var temp body
+		waktu := value.CreatedAt
+		format := waktu.Format("2006-01-02")
+		temp.ID = value.ID
+		temp.Tanggal = format
+		temp.UserID = value.UserID
+		temp.GedungID = value.GedungID
+		var gedung entity.Gedung
+		if err := database.DB.Debug().Preload("Links").Where("id = ?", value.GedungID).Find(&gedung).Error; err != nil {
+			sdk.FailOrError(c, http.StatusNotFound, "Data not found", err)
+			return
+		}
+		temp.NamaGedung = gedung.Nama
+		temp.LinkGedung = gedung.Links[0].Link
+		temp.Link = value.Link
+		temp.Nominal = value.Nominal
+		result = append(result, temp)
+	}
+	sdk.Success(c, http.StatusOK, "Data found", result)
 }
