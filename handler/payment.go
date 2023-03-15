@@ -1,4 +1,4 @@
-package Handler
+package handler
 
 import (
 	"InternBCC/database"
@@ -59,12 +59,14 @@ func Payment(c *gin.Context) {
 
 	nominal := c.PostForm("nominal")
 	harga, err := strconv.Atoi(nominal)
+	status := c.PostForm("status")
 	var req = entity.Payment{
 		ID:       randomId(),
 		UserID:   claims.ID,
 		GedungID: uint(GedungId),
 		Link:     link,
 		Nominal:  harga,
+		Status:   status,
 	}
 	if err := database.DB.Create(&req).Error; err != nil {
 		sdk.FailOrError(c, http.StatusBadRequest, "Mohon upload file bukti pembayaran", err)
@@ -91,6 +93,7 @@ func GetHistory(c *gin.Context) {
 		LinkGedung string `json:"link_gedung"`
 		Link       string `json:"link"`
 		Nominal    int    `json:"nominal"`
+		Status     string `json:"status"`
 	}
 
 	var result []body
@@ -111,6 +114,7 @@ func GetHistory(c *gin.Context) {
 		temp.LinkGedung = gedung.Links[0].Link
 		temp.Link = value.Link
 		temp.Nominal = value.Nominal
+		temp.Status = value.Status
 		result = append(result, temp)
 	}
 	sdk.Success(c, http.StatusOK, "Data found", result)

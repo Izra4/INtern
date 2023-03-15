@@ -1,9 +1,10 @@
 package main
 
 import (
-	"InternBCC/Handler"
 	"InternBCC/database"
+	"InternBCC/handler"
 	"InternBCC/middleware"
+	"InternBCC/model"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"log"
@@ -12,6 +13,7 @@ import (
 func main() {
 	err := godotenv.Load()
 	db := database.InitDB()
+	database.DropTable(db, "payments", "bookings", "gedungs", "links", "users")
 	if err := database.Migrate(db); err != nil {
 		log.Fatal("Failed to Migrate")
 	}
@@ -37,21 +39,22 @@ func main() {
 		})
 	})
 
-	//model.GDummy()
-	//model.LDummy()
+	model.GDummy()
+	model.LDummy()
 	v1 := r.Group("/v1")
-	v1.POST("/register", Handler.Register)
-	v1.POST("/login", Handler.LogIn)
-	v1.GET("/validate", middleware.JwtMiddleware(), Handler.Validate)
-	v1.PUT("/update", middleware.JwtMiddleware(), Handler.ChangeNameNumber)
-	v1.PUT("/change-pass", middleware.JwtMiddleware(), Handler.ChangePass)
-	v1.POST("/delete-account", middleware.JwtMiddleware(), Handler.DeleteAccount)
+	v1.POST("/register", handler.Register)
+	v1.POST("/login", handler.LogIn)
+	v1.GET("/validate", middleware.JwtMiddleware(), handler.Validate)
+	v1.PUT("/update", middleware.JwtMiddleware(), handler.ChangeNameNumber)
+	v1.PUT("/change-pass", middleware.JwtMiddleware(), handler.ChangePass)
+	v1.POST("/delete-account", middleware.JwtMiddleware(), handler.DeleteAccount)
 
-	v1.GET("/gedungs", Handler.FindAllGedung)
-	v1.GET("/gedungs/:id", Handler.GetGedungByID)
-	v1.GET("/history", middleware.JwtMiddleware(), Handler.GetHistory)
-	v1.POST("/booking/:id", middleware.JwtMiddleware(), Handler.Booking)
-	v1.GET("/booking-details", middleware.JwtMiddleware(), Handler.GetBookingData)
-	v1.POST("/payment/:id", middleware.JwtMiddleware(), Handler.Payment)
+	v1.GET("/gedungs", handler.FindAllGedung)
+	v1.GET("/gedungs/:id", handler.GetGedungByID)
+	v1.GET("/search/gedungs", handler.SearchByName)
+	v1.GET("/history", middleware.JwtMiddleware(), handler.GetHistory)
+	v1.POST("/booking/:id", middleware.JwtMiddleware(), handler.Booking)
+	v1.GET("/booking-details", middleware.JwtMiddleware(), handler.GetBookingData)
+	v1.POST("/payment/:id", middleware.JwtMiddleware(), handler.Payment)
 	r.Run()
 }
