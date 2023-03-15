@@ -103,7 +103,7 @@ func GDummy() {
 
 	G8 := entity.Gedung{
 		Model:     gorm.Model{},
-		Nama:      "Harris conventions ballroom",
+		Nama:      "Harris Conventions Ballroom",
 		Alamat:    "Jl. A Yani Utara, Jl. Riverside Blk. C No.1, Polowijen, Blimbing, Malang, Jawa timur",
 		Kecamatan: "Blimbing",
 		Harga:     73000000,
