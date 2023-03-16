@@ -5,11 +5,13 @@ import (
 	"InternBCC/entity"
 	"InternBCC/model"
 	"InternBCC/sdk"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/gomail.v2"
 	"gorm.io/gorm"
 	"math/rand"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 )
@@ -243,23 +245,37 @@ func ForgotPassword(c *gin.Context) {
 		return
 	}
 
-	var User entity.User
-	if err := database.DB.Where("email = ?", req.Email).Find(&User).Error; err != nil {
-		sdk.FailOrError(c, http.StatusNotFound, "User not found", err)
+	var user entity.User
+	if err := database.DB.Where("email = ?", req.Email).Find(&user).Error; err != nil {
+		sdk.FailOrError(c, http.StatusNotFound, "Data not found", err)
 		return
 	}
+	if user.ID == 0 {
+		sdk.Fail(c, http.StatusNotFound, "User not found")
+		return
+	}
+	newPass := randomString(8)
 	m := gomail.NewMessage()
-	m.SetHeader("From", "alex@example.com")
-	m.SetHeader("To", "bob@example.com", "cora@example.com")
-	m.SetAddressHeader("Cc", "dan@example.com", "Dan")
-	m.SetHeader("Subject", "Hello!")
-	m.SetBody("text/html", "Hello <b>Bob</b> and <i>Cora</i>!")
+	m.SetHeader("From", "grahagrent@gmail.com")
+	m.SetHeader("To", req.Email)
+	m.SetHeader("Subject", "Reset Password")
+	m.SetBody("text/plain", fmt.Sprintf("Password baru Anda: %s", newPass))
 
-	d := gomail.NewDialer("smtp.example.com", 587, "user", "123456")
+	d := gomail.NewDialer("smtp.gmail.com", 587, "grahagrent@gmail.com", os.Getenv("PASS"))
 
 	if err := d.DialAndSend(m); err != nil {
 		panic(err)
 	}
+	hash, err := sdk.Hashing(newPass)
+	if err != nil {
+		sdk.FailOrError(c, http.StatusInternalServerError, "Failed to Hash", err)
+		return
+	}
+	if err := database.DB.Model(&user).Where("email = ?", req.Email).Update("password", hash).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update password"})
+		return
+	}
+	sdk.Success(c, http.StatusOK, "Password telah direset", err)
 }
 
 func randomString(length int) string {

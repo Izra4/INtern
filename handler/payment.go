@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"math/rand"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -47,9 +48,9 @@ func Payment(c *gin.Context) {
 	}
 
 	supClient := supabasestorageuploader.NewSupabaseClient(
-		"https://ontvftbxgsmzxwlqhsdn.supabase.co",
-		"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9udHZmdGJ4Z3Ntenh3bHFoc2RuIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzg0MDgxMzQsImV4cCI6MTk5Mzk4NDEzNH0.7yypIF1_gkHACVRxolU2KjhLpdUumKw3OdaRtHSnB9Q",
-		"gambar-gedung",
+		os.Getenv("PROJECT_URL"),
+		os.Getenv("PROJECT_API"),
+		os.Getenv("PROJECT_STORAGE"),
 		"",
 	)
 	file, err := c.FormFile("bukti")

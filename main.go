@@ -12,10 +12,6 @@ import (
 func main() {
 	err := godotenv.Load()
 	db := database.InitDB()
-	database.DropTable(db, "payments")
-	database.DropTable(db, "bookings")
-	database.TruncateTableIgnoreFK(db, "payments")
-	database.TruncateTableIgnoreFK(db, "bookings")
 	if err := database.Migrate(db); err != nil {
 		log.Fatal("Failed to Migrate")
 	}
@@ -49,6 +45,7 @@ func main() {
 	v1.GET("/validate", middleware.JwtMiddleware(), handler.Validate)
 	v1.PUT("/profile/update", middleware.JwtMiddleware(), handler.ChangeNameNumber)
 	v1.PUT("/change-pass", middleware.JwtMiddleware(), handler.ChangePass)
+	v1.POST("/pass-reset", handler.ForgotPassword)
 	v1.DELETE("/delete-account", middleware.JwtMiddleware(), handler.DeleteAccount)
 
 	v1.GET("/gedungs", handler.FindAllGedung)
