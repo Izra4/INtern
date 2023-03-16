@@ -31,6 +31,7 @@ func Booking(c *gin.Context) {
 	parsed, err := time.Parse(template, tglStr)
 	if err != nil {
 		sdk.FailOrError(c, http.StatusInternalServerError, "Failed to parse", err)
+		return
 	}
 	var get = entity.Booking{
 		Nama:      req.Nama,

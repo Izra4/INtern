@@ -16,23 +16,18 @@ import (
 )
 
 func randomId() string {
-	// Membuat seed untuk generator angka acak
 	rand.Seed(time.Now().UnixNano())
 
-	// Membuat 2 karakter acak
 	var letters strings.Builder
 	for i := 0; i < 2; i++ {
 		letters.WriteByte(byte(rand.Intn(26) + 65))
 	}
-
-	// Membuat 5 digit angka acak
 	number := rand.Intn(100000)
 	numberString := strconv.Itoa(number)
 	for len(numberString) < 5 {
 		numberString = "0" + numberString
 	}
 
-	// Menggabungkan karakter dan angka ke format "XX-12332"
 	return letters.String() + "-" + numberString
 }
 
@@ -40,7 +35,10 @@ func Payment(c *gin.Context) {
 	userId := c.MustGet("user")
 	claims := userId.(model.UserClaims)
 	GedungIdStr := c.Param("id")
-	GedungId, _ := strconv.Atoi(GedungIdStr)
+	GedungId, err := strconv.Atoi(GedungIdStr)
+	if err != nil {
+		sdk.Fail(c, http.StatusInternalServerError, "Failed to parse")
+	}
 	var booking entity.Booking
 	if err := database.DB.Where("user_id", claims.ID).Last(&booking).Error; err != nil {
 		sdk.FailOrError(c, http.StatusNotFound, "Booking data not found", err)
@@ -66,6 +64,9 @@ func Payment(c *gin.Context) {
 
 	nominal := c.PostForm("nominal")
 	harga, err := strconv.Atoi(nominal)
+	if err != nil {
+		sdk.Fail(c, http.StatusInternalServerError, "Failed to parse")
+	}
 	status := c.PostForm("status")
 	var req = entity.Payment{
 		ID:        randomId(),
@@ -78,6 +79,7 @@ func Payment(c *gin.Context) {
 	}
 	if err := database.DB.Create(&req).Error; err != nil {
 		sdk.FailOrError(c, http.StatusBadRequest, "Mohon upload file bukti pembayaran", err)
+		return
 	}
 	sdk.Success(c, http.StatusOK, "Pembayaran Berhasil", req)
 }

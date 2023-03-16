@@ -24,24 +24,15 @@ func Register(c *gin.Context) {
 		return
 	}
 	if !strings.HasSuffix(get.Email, "@gmail.com") {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"status":  "fail",
-			"message": "Email harus berakhiran @gmail.com",
-		})
+		sdk.Fail(c, http.StatusBadRequest, "Email harus berakhiran @gmail.com")
 		return
 	}
 	if (!upperCase(get.Password)) || (!hasNum(get.Password)) {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"status":  "fail",
-			"message": "Password harus mengandung 1 huruf kapital dan 1 angka",
-		})
+		sdk.Fail(c, http.StatusBadRequest, "Password harus mengandung 1 huruf kapital dan 1 angka")
 		return
 	}
 	if (get.Password != get.Passconfirm) || (len(get.Password) < 8) {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"status":  "fail",
-			"message": "Password tidak sama / kurang dari 8 karakter",
-		})
+		sdk.Fail(c, http.StatusBadRequest, "Password tidak sama / kurang dari 8 karakter")
 		return
 	}
 	//Hashing
@@ -72,17 +63,17 @@ func LogIn(c *gin.Context) {
 	var body model.LogIn
 	if err := c.ShouldBindJSON(&body); err != nil {
 		sdk.FailOrError(c, http.StatusBadRequest, "Error to read", err)
-
 		return
 	}
 
 	//cari data
 	var req entity.User
-	database.DB.First(&req, "email = ?", body.Email)
+	if err := database.DB.First(&req, "email = ?", body.Email).Error; err != nil {
+		sdk.FailOrError(c, http.StatusNotFound, "Data not found", err)
+		return
+	}
 	if req.ID == 0 {
-		c.JSON(http.StatusNotFound, gin.H{
-			"Error": "Invalid Email / Password",
-		})
+		sdk.Fail(c, http.StatusNotFound, "Invalid Email / Password")
 		return
 	}
 
@@ -100,7 +91,12 @@ func LogIn(c *gin.Context) {
 }
 
 func Validate(c *gin.Context) {
-	id, _ := c.Get("user")
+	id, ok := c.Get("user")
+	if !ok {
+		sdk.Fail(c, http.StatusUnauthorized, "User unauthorized")
+		return
+	}
+
 	claims := id.(model.UserClaims)
 	user := entity.User{}
 
@@ -173,17 +169,11 @@ func ChangePass(c *gin.Context) {
 		return
 	}
 	if (!upperCase(req.NewPass)) || (!hasNum(req.NewPass)) {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"status":  "fail",
-			"message": "Password harus mengandung 1 huruf kapital dan 1 angka",
-		})
+		sdk.Fail(c, http.StatusBadRequest, "Password harus mengandung 1 huruf kapital dan 1 angka")
 		return
 	}
 	if (req.NewPass != req.Confirm) || (len(req.NewPass) < 8) {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"status":  "fail",
-			"message": "Password tidak sama / kurang dari 8 karakter",
-		})
+		sdk.Fail(c, http.StatusBadRequest, "Password tidak sama / kurang dari 8 karakter")
 		return
 	}
 
@@ -193,7 +183,7 @@ func ChangePass(c *gin.Context) {
 		return
 	}
 	if err := database.DB.Model(&user).Update("password", hash).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update password"})
+		sdk.FailOrError(c, http.StatusInternalServerError, "Password gagal dirubah", err)
 		return
 	}
 	sdk.Success(c, http.StatusOK, "Password berhasil dirubah", user)
@@ -272,7 +262,7 @@ func ForgotPassword(c *gin.Context) {
 		return
 	}
 	if err := database.DB.Model(&user).Where("email = ?", req.Email).Update("password", hash).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update password"})
+		sdk.Fail(c, http.StatusInternalServerError, "Gagal mengupdate password")
 		return
 	}
 	sdk.Success(c, http.StatusOK, "Password telah direset", err)

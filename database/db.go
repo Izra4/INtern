@@ -27,36 +27,35 @@ func InitDB() *gorm.DB {
 	return DB
 }
 
-func DropTable(db *gorm.DB, tableName ...string) error {
-	// Drop the table
-	for _, tableName := range tableName {
-		result := db.Exec(fmt.Sprintf("DROP TABLE IF EXISTS %s", tableName))
-		if result.Error != nil {
-			return result.Error
-		}
-	}
+//func DropTable(db *gorm.DB, tableName ...string) error {
+//	// Drop the table
+//	for _, tableName := range tableName {
+//		result := db.Exec(fmt.Sprintf("DROP TABLE IF EXISTS %s", tableName))
+//		if result.Error != nil {
+//			return result.Error
+//		}
+//	}
+//	return nil
+//}
 
-	return nil
-}
-
-func TruncateTableIgnoreFK(db *gorm.DB, tableName string) error {
-	// Nonaktifkan constraint foreign key
-	if err := db.Exec("SET FOREIGN_KEY_CHECKS = 0").Error; err != nil {
-		return err
-	}
-
-	// Lakukan truncate pada tabel
-	if err := db.Exec("TRUNCATE TABLE " + tableName).Error; err != nil {
-		return err
-	}
-
-	// Aktifkan kembali constraint foreign key
-	if err := db.Exec("SET FOREIGN_KEY_CHECKS = 1").Error; err != nil {
-		return err
-	}
-
-	return nil
-}
+//func TruncateTableIgnoreFK(db *gorm.DB, tableName string) error {
+//
+//	if err := db.Exec("SET FOREIGN_KEY_CHECKS = 0").Error; err != nil {
+//		return err
+//	}
+//
+//
+//	if err := db.Exec("TRUNCATE TABLE " + tableName).Error; err != nil {
+//		return err
+//	}
+//
+//
+//	if err := db.Exec("SET FOREIGN_KEY_CHECKS = 1").Error; err != nil {
+//		return err
+//	}
+//
+//	return nil
+//}
 
 func Migrate(db *gorm.DB) error {
 	return db.AutoMigrate(

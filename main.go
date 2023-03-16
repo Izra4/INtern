@@ -31,11 +31,6 @@ func main() {
 			c.Next()
 		}
 	})
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"ping": "pong",
-		})
-	})
 
 	//model.GDummy()
 	//model.LDummy()

@@ -10,6 +10,7 @@ import (
 
 func SearchByName(c *gin.Context) {
 	name := c.Query("name")
+	kecamatan := c.Query("kecamatan")
 	var gedungs []entity.Gedung
 	if name != "" {
 		if err := database.DB.Where("nama LIKE ?", "%"+name+"%").Preload("Links").Find(&gedungs).Error; err != nil {
@@ -17,9 +18,16 @@ func SearchByName(c *gin.Context) {
 			return
 		}
 		if len(gedungs) == 0 {
-			c.JSON(http.StatusNotFound, gin.H{
-				"error": "Gedung tidak ditemukan",
-			})
+			sdk.Fail(c, http.StatusNotFound, "Data gedung tidak ditemukan")
+			return
+		}
+	} else if kecamatan != "" {
+		if err := database.DB.Where("kecamatan LIKE ?", "%"+kecamatan+"%").Preload("Links").Find(&gedungs).Error; err != nil {
+			sdk.FailOrError(c, http.StatusNotFound, "Informasi gedung tidak ada", err)
+			return
+		}
+		if len(gedungs) == 0 {
+			sdk.Fail(c, http.StatusNotFound, "Data gedung tidak ditemukan")
 			return
 		}
 	} else {
