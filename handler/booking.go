@@ -42,11 +42,13 @@ func Booking(c *gin.Context) {
 		UserID:    claims.ID,
 		GedungID:  uint(GeID),
 	}
+	req.UserID = claims.ID
+	req.GedungID = uint(GeID)
 	if err := database.DB.Create(&get).Error; err != nil {
 		sdk.FailOrError(c, http.StatusInternalServerError, "Error to create", err)
 		return
 	}
-	sdk.Success(c, 200, "Booking telah dibuat", get)
+	sdk.Success(c, 200, "Booking telah dibuat", req)
 
 }
 

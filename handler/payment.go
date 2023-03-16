@@ -40,6 +40,12 @@ func Payment(c *gin.Context) {
 	claims := userId.(model.UserClaims)
 	GedungIdStr := c.Param("id")
 	GedungId, _ := strconv.Atoi(GedungIdStr)
+	var booking entity.Booking
+	if err := database.DB.Where("user_id", claims.ID).Last(&booking).Error; err != nil {
+		sdk.FailOrError(c, http.StatusNotFound, "Booking data not found", err)
+		return
+	}
+
 	supClient := supabasestorageuploader.NewSupabaseClient(
 		"https://ontvftbxgsmzxwlqhsdn.supabase.co",
 		"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9udHZmdGJ4Z3Ntenh3bHFoc2RuIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzg0MDgxMzQsImV4cCI6MTk5Mzk4NDEzNH0.7yypIF1_gkHACVRxolU2KjhLpdUumKw3OdaRtHSnB9Q",
@@ -61,12 +67,13 @@ func Payment(c *gin.Context) {
 	harga, err := strconv.Atoi(nominal)
 	status := c.PostForm("status")
 	var req = entity.Payment{
-		ID:       randomId(),
-		UserID:   claims.ID,
-		GedungID: uint(GedungId),
-		Link:     link,
-		Nominal:  harga,
-		Status:   status,
+		ID:        randomId(),
+		UserID:    claims.ID,
+		GedungID:  uint(GedungId),
+		Link:      link,
+		Nominal:   harga,
+		Status:    status,
+		BookingID: booking.ID,
 	}
 	if err := database.DB.Create(&req).Error; err != nil {
 		sdk.FailOrError(c, http.StatusBadRequest, "Mohon upload file bukti pembayaran", err)
@@ -85,15 +92,19 @@ func GetHistory(c *gin.Context) {
 	}
 
 	type body struct {
-		ID         string `json:"id"`
-		Tanggal    string `json:"tanggal"`
-		UserID     uint   `json:"user_id"`
-		GedungID   uint   `json:"gedung_id"`
-		NamaGedung string `json:"nama_gedung"`
-		LinkGedung string `json:"link_gedung"`
-		Link       string `json:"link"`
-		Nominal    int    `json:"nominal"`
-		Status     string `json:"status"`
+		ID             string `json:"id"`
+		Tanggal        string `json:"tanggal"`
+		UserID         uint   `json:"user_id"`
+		GedungID       uint   `json:"gedung_id"`
+		NamaGedung     string `json:"nama_gedung"`
+		LinkGedung     string `json:"link_gedung"`
+		Link           string `json:"link"`
+		Nominal        int    `json:"nominal"`
+		Status         string `json:"status"`
+		BookingID      uint   `json:"booking_id"`
+		NamaUser       string `json:"nama_user"`
+		TanggalBooking string `json:"tanggal_booking"`
+		Fasilitas      string `json:"fasilitas"`
 	}
 
 	var result []body
@@ -110,11 +121,23 @@ func GetHistory(c *gin.Context) {
 			sdk.FailOrError(c, http.StatusNotFound, "Data not found", err)
 			return
 		}
+
 		temp.NamaGedung = gedung.Nama
 		temp.LinkGedung = gedung.Links[0].Link
 		temp.Link = value.Link
 		temp.Nominal = value.Nominal
 		temp.Status = value.Status
+		temp.BookingID = value.BookingID
+		var booking entity.Booking
+		if err := database.DB.Where("id = ?", value.BookingID).Find(&booking).Error; err != nil {
+			sdk.FailOrError(c, http.StatusNotFound, "Data not found", err)
+			return
+		}
+		waktuBooking := booking.Tanggal
+		wbFormat := waktuBooking.Format("2006-01-02")
+		temp.NamaUser = booking.Nama
+		temp.TanggalBooking = wbFormat
+		temp.Fasilitas = booking.Fasilitas
 		result = append(result, temp)
 	}
 	if len(result) == 0 {

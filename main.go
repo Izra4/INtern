@@ -12,6 +12,10 @@ import (
 func main() {
 	err := godotenv.Load()
 	db := database.InitDB()
+	database.DropTable(db, "payments")
+	database.DropTable(db, "bookings")
+	database.TruncateTableIgnoreFK(db, "payments")
+	database.TruncateTableIgnoreFK(db, "bookings")
 	if err := database.Migrate(db); err != nil {
 		log.Fatal("Failed to Migrate")
 	}

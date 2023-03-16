@@ -15,4 +15,5 @@ type Booking struct {
 	Fasilitas string    `gorm:"type:VARCHAR(200);NOT NULL" json:"fasilitas"`
 	UserID    uint
 	GedungID  uint
+	Payment   Payment
 }

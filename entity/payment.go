@@ -13,4 +13,5 @@ type Payment struct {
 	Link      string    `gorm:"type:TEXT;NOT NULL" json:"link"`
 	Nominal   int       `gorm:"type:int;NOT NULL" json:"nominal"`
 	Status    string    `gorm:"type:VARCHAR(20);NOT NULL" json:"status"`
+	BookingID uint
 }

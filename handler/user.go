@@ -6,29 +6,13 @@ import (
 	"InternBCC/model"
 	"InternBCC/sdk"
 	"github.com/gin-gonic/gin"
+	"gopkg.in/gomail.v2"
 	"gorm.io/gorm"
 	"math/rand"
 	"net/http"
 	"strings"
 	"time"
 )
-
-func upperCase(pass string) bool {
-	for _, char := range pass {
-		if char >= 'A' && char <= 'Z' {
-			return true
-		}
-	}
-	return false
-}
-func hasNum(pass string) bool {
-	for _, char := range pass {
-		if char >= '0' && char <= '9' {
-			return true
-		}
-	}
-	return false
-}
 
 func Register(c *gin.Context) {
 	//get name, email, number, password
@@ -213,19 +197,6 @@ func ChangePass(c *gin.Context) {
 	sdk.Success(c, http.StatusOK, "Password berhasil dirubah", user)
 }
 
-func randomString(length int) string {
-	var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-
-	rand.Seed(time.Now().UnixNano())
-
-	b := make([]rune, length)
-	for i := range b {
-		b[i] = letterRunes[rand.Intn(len(letterRunes))]
-	}
-
-	return string(b)
-}
-
 func DeleteAccount(c *gin.Context) {
 	type pass struct {
 		Password string `json:"password" binding:"required"`
@@ -233,15 +204,14 @@ func DeleteAccount(c *gin.Context) {
 	id := c.MustGet("user")
 	claims := id.(model.UserClaims)
 
-	var req pass
-	if err := c.BindJSON(&req); err != nil {
-		sdk.FailOrError(c, http.StatusBadRequest, "Mohon mengisi password Anda", err)
-		return
-	}
-
 	var user entity.User
 	if err := database.DB.Where("id = ?", claims.ID).First(&user).Error; err != nil {
 		sdk.FailOrError(c, http.StatusNotFound, "User not found", err)
+		return
+	}
+	var req pass
+	if err := c.BindJSON(&req); err != nil {
+		sdk.FailOrError(c, http.StatusBadRequest, "Mohon mengisi password Anda", err)
 		return
 	}
 
@@ -252,7 +222,7 @@ func DeleteAccount(c *gin.Context) {
 	}
 	user.Email = randomString(10)
 	if err := database.DB.Save(&user).Error; err != nil {
-		sdk.FailOrError(c, http.StatusInternalServerError, "Failed to save email", err)
+		sdk.FailOrError(c, http.StatusInternalServerError, "Failed", err)
 		return
 	}
 	if err := database.DB.Delete(&user).Error; err != nil {
@@ -261,4 +231,64 @@ func DeleteAccount(c *gin.Context) {
 	}
 	sdk.Success(c, http.StatusOK, "Akun Anda telah terhapus", user)
 
+}
+
+func ForgotPassword(c *gin.Context) {
+	type email struct {
+		Email string `json:"email"`
+	}
+	var req email
+	if err := c.BindJSON(&req); err != nil {
+		sdk.FailOrError(c, http.StatusBadRequest, "error to read", err)
+		return
+	}
+
+	var User entity.User
+	if err := database.DB.Where("email = ?", req.Email).Find(&User).Error; err != nil {
+		sdk.FailOrError(c, http.StatusNotFound, "User not found", err)
+		return
+	}
+	m := gomail.NewMessage()
+	m.SetHeader("From", "alex@example.com")
+	m.SetHeader("To", "bob@example.com", "cora@example.com")
+	m.SetAddressHeader("Cc", "dan@example.com", "Dan")
+	m.SetHeader("Subject", "Hello!")
+	m.SetBody("text/html", "Hello <b>Bob</b> and <i>Cora</i>!")
+
+	d := gomail.NewDialer("smtp.example.com", 587, "user", "123456")
+
+	if err := d.DialAndSend(m); err != nil {
+		panic(err)
+	}
+}
+
+func randomString(length int) string {
+	var random = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+	rand.Seed(time.Now().UnixNano())
+
+	b := make([]rune, length)
+	for i := range b {
+		b[i] = random[rand.Intn(len(random))]
+	}
+
+	return string(b)
+}
+
+func upperCase(pass string) bool {
+	for _, char := range pass {
+		if char >= 'A' && char <= 'Z' {
+			return true
+		}
+	}
+	return false
+}
+
+func hasNum(pass string) bool {
+	for _, char := range pass {
+		if char >= '0' && char <= '9' {
+			return true
+		}
+	}
+	return false
 }
