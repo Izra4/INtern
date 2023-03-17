@@ -62,11 +62,19 @@ func Payment(c *gin.Context) {
 	}
 
 	nominal := c.PostForm("nominal")
+	if nominal == "" {
+		sdk.Fail(c, http.StatusBadRequest, "Nominal is required")
+		return
+	}
 	harga, err := strconv.Atoi(nominal)
 	if err != nil {
 		sdk.Fail(c, http.StatusInternalServerError, "Failed to parse")
 	}
 	status := c.PostForm("status")
+	if status == "" {
+		sdk.Fail(c, http.StatusBadRequest, "Status is required")
+		return
+	}
 	var req = entity.Payment{
 		ID:        randomId(),
 		UserID:    claims.ID,

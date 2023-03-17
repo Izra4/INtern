@@ -34,6 +34,7 @@ func main() {
 
 	//handler.GDummy()
 	//handler.LDummy()
+	gedungHandler := handler.NewGedungHandler()
 	v1 := r.Group("/v1")
 	v1.POST("/register", handler.Register)
 	v1.POST("/login", handler.LogIn)
@@ -43,8 +44,8 @@ func main() {
 	v1.POST("/pass-reset", handler.ForgotPassword)
 	v1.DELETE("/delete-account", middleware.JwtMiddleware(), handler.DeleteAccount)
 
-	v1.GET("/gedungs", handler.FindAllGedung)
-	v1.GET("/gedungs/:id", handler.GetGedungByID)
+	v1.GET("/gedungs", gedungHandler.FindAllGedung)
+	v1.GET("/gedungs/:id", gedungHandler.GetGedungByID)
 	v1.GET("/search/gedungs", handler.SearchByName)
 	v1.GET("/history", middleware.JwtMiddleware(), handler.GetHistory)
 	v1.POST("/booking/:id", middleware.JwtMiddleware(), handler.Booking)

@@ -2,7 +2,7 @@ package handler
 
 import (
 	"InternBCC/database"
-	"InternBCC/entity"
+	"InternBCC/repository"
 	"InternBCC/sdk"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -10,11 +10,17 @@ import (
 	"strings"
 )
 
-func FindAllGedung(c *gin.Context) {
-	var get []entity.Gedung
+type gedungHandler struct {
+	repo repository.GedungRepository
+}
 
-	//var result []disp
-	if err := database.DB.Debug().Preload("Links").Find(&get).Error; err != nil {
+func NewGedungHandler() *gedungHandler {
+	return &gedungHandler{repo: repository.NewGedungRepository(database.DB)}
+}
+
+func (h *gedungHandler) FindAllGedung(c *gin.Context) {
+	get, err := h.repo.FindAll()
+	if err != nil {
 		sdk.FailOrError(c, http.StatusInternalServerError, "Failed to load data", err)
 		return
 	}
@@ -42,11 +48,11 @@ func FindAllGedung(c *gin.Context) {
 	sdk.Success(c, 200, "Data found", result)
 }
 
-func GetGedungByID(c *gin.Context) {
+func (h *gedungHandler) GetGedungByID(c *gin.Context) {
 	idstr := c.Param("id")
 	id, _ := strconv.Atoi(idstr)
-	var get entity.Gedung
-	if err := database.DB.Preload("Links").First(&get, id).Error; err != nil {
+	get, err := h.repo.FindByID(uint(id))
+	if err != nil {
 		sdk.FailOrError(c, http.StatusNotFound, "Data not Found", err)
 		return
 	}

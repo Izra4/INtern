@@ -11,11 +11,11 @@ import (
 )
 
 func Booking(c *gin.Context) {
-	id, _ := c.Get("user")
+	id, ok := c.Get("user")
 	//status unautho
-	//if err != true {
-	//	sdk.FailOrError(c, http.StatusUnauthorized, "Unauthorized", err)
-	//}
+	if !ok {
+		sdk.Fail(c, http.StatusUnauthorized, "Unauthorized")
+	}
 	claims := id.(entity.UserClaims)
 	GeIDStr := c.Param("id")
 	GeID, _ := strconv.Atoi(GeIDStr)
