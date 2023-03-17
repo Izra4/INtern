@@ -251,6 +251,10 @@ func ForgotPassword(c *gin.Context) {
 		sdk.FailOrError(c, http.StatusNotFound, "Data not found", err)
 		return
 	}
+	if user.ID == 0 {
+		sdk.Fail(c, http.StatusNotFound, "User not found")
+		return
+	}
 	newPass := randomString(8)
 	m := gomail.NewMessage()
 	m.SetHeader("From", "grahagrent@gmail.com")
