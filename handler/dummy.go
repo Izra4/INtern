@@ -1,4 +1,4 @@
-package model
+package handler
 
 import (
 	"InternBCC/database"

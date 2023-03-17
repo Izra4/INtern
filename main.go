@@ -32,8 +32,8 @@ func main() {
 		}
 	})
 
-	//model.GDummy()
-	//model.LDummy()
+	//handler.GDummy()
+	//handler.LDummy()
 	v1 := r.Group("/v1")
 	v1.POST("/register", handler.Register)
 	v1.POST("/login", handler.LogIn)

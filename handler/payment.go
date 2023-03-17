@@ -3,7 +3,6 @@ package handler
 import (
 	"InternBCC/database"
 	"InternBCC/entity"
-	"InternBCC/model"
 	"InternBCC/sdk"
 	supabasestorageuploader "github.com/adityarizkyramadhan/supabase-storage-uploader"
 	"github.com/gin-gonic/gin"
@@ -33,7 +32,7 @@ func randomId() string {
 
 func Payment(c *gin.Context) {
 	userId := c.MustGet("user")
-	claims := userId.(model.UserClaims)
+	claims := userId.(entity.UserClaims)
 	GedungIdStr := c.Param("id")
 	GedungId, err := strconv.Atoi(GedungIdStr)
 	if err != nil {
@@ -86,7 +85,7 @@ func Payment(c *gin.Context) {
 
 func GetHistory(c *gin.Context) {
 	userId := c.MustGet("user")
-	claims := userId.(model.UserClaims)
+	claims := userId.(entity.UserClaims)
 
 	var get []entity.Payment
 	if err := database.DB.Where("user_id = ?", claims.ID).Find(&get).

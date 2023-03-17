@@ -3,7 +3,6 @@ package handler
 import (
 	"InternBCC/database"
 	"InternBCC/entity"
-	"InternBCC/model"
 	"InternBCC/sdk"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -17,11 +16,11 @@ func Booking(c *gin.Context) {
 	//if err != true {
 	//	sdk.FailOrError(c, http.StatusUnauthorized, "Unauthorized", err)
 	//}
-	claims := id.(model.UserClaims)
+	claims := id.(entity.UserClaims)
 	GeIDStr := c.Param("id")
 	GeID, _ := strconv.Atoi(GeIDStr)
 	//statusbad
-	var req model.Booking
+	var req entity.BookingPost
 	if err := c.BindJSON(&req); err != nil {
 		sdk.FailOrError(c, http.StatusBadRequest, "Lengkapi isian Anda", err)
 		return
@@ -62,7 +61,7 @@ func GetBookingData(c *gin.Context) {
 		Alamat    string `json:"alamat"`
 	}
 	id, _ := c.Get("user")
-	claims := id.(model.UserClaims)
+	claims := id.(entity.UserClaims)
 
 	var get entity.Booking
 	if err := database.DB.Where("user_id = ?", claims.ID).Last(&get).Error; err != nil {

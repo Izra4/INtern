@@ -3,7 +3,6 @@ package handler
 import (
 	"InternBCC/database"
 	"InternBCC/entity"
-	"InternBCC/model"
 	"InternBCC/sdk"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -18,7 +17,7 @@ import (
 
 func Register(c *gin.Context) {
 	//get name, email, number, password
-	var get model.Regist
+	var get entity.Regist
 	if err := c.ShouldBindJSON(&get); err != nil {
 		sdk.FailOrError(c, http.StatusBadRequest, "Mohon lengkapi input Anda", err)
 		return
@@ -64,7 +63,7 @@ func Register(c *gin.Context) {
 }
 
 func LogIn(c *gin.Context) {
-	var body model.LogIn
+	var body entity.LogIn
 	if err := c.ShouldBindJSON(&body); err != nil {
 		sdk.FailOrError(c, http.StatusBadRequest, "Error to read", err)
 		return
@@ -101,7 +100,7 @@ func Validate(c *gin.Context) {
 		return
 	}
 
-	claims := id.(model.UserClaims)
+	claims := id.(entity.UserClaims)
 	user := entity.User{}
 
 	err := database.DB.First(&user, claims.ID)
@@ -120,7 +119,7 @@ func ChangeNameNumber(c *gin.Context) {
 		Nomor string `json:"nomor"`
 	}
 	userId := c.MustGet("user")
-	claims := userId.(model.UserClaims)
+	claims := userId.(entity.UserClaims)
 
 	var user entity.User
 	if err := database.DB.First(&user, claims.ID).Error; err != nil {
@@ -156,7 +155,7 @@ func ChangeNameNumber(c *gin.Context) {
 
 func ChangePass(c *gin.Context) {
 	id, _ := c.Get("user")
-	claims := id.(model.UserClaims)
+	claims := id.(entity.UserClaims)
 
 	var user entity.User
 	if err := database.DB.First(&user, claims.ID).Error; err != nil {
@@ -206,7 +205,7 @@ func DeleteAccount(c *gin.Context) {
 		Password string `json:"password" binding:"required"`
 	}
 	id := c.MustGet("user")
-	claims := id.(model.UserClaims)
+	claims := id.(entity.UserClaims)
 
 	var user entity.User
 	if err := database.DB.Where("id = ?", claims.ID).First(&user).Error; err != nil {

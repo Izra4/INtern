@@ -2,7 +2,6 @@ package sdk
 
 import (
 	"InternBCC/entity"
-	"InternBCC/model"
 	"errors"
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
@@ -18,7 +17,7 @@ func Token(payload entity.User) (string, error) {
 		exp = time.Hour * 1
 	}
 	//generate jwt token
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, model.NewUserClaims(payload.ID, exp))
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, entity.NewUserClaims(payload.ID, exp))
 
 	// Sign and get the complete encoded token as a string using the secret
 	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET_KEY")))

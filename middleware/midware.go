@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"InternBCC/model"
+	"InternBCC/entity"
 	"InternBCC/sdk"
 	"errors"
 	"fmt"
@@ -70,7 +70,7 @@ func JwtMiddleware() gin.HandlerFunc {
 			return
 		}
 		tokenJwt := authorization[7:]
-		claims := model.UserClaims{}
+		claims := entity.UserClaims{}
 		jwtKey := os.Getenv("SECRET_KEY")
 		if _, err := sdk.DecodeToken(tokenJwt, &claims, jwtKey); err != nil {
 			c.Abort()
