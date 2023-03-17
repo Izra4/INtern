@@ -23,16 +23,20 @@ func Register(c *gin.Context) {
 		sdk.FailOrError(c, http.StatusBadRequest, "Mohon lengkapi input Anda", err)
 		return
 	}
-	if !strings.HasSuffix(get.Email, "@gmail.com") {
-		sdk.Fail(c, http.StatusBadRequest, "Email harus berakhiran @gmail.com")
+	if !strings.Contains(get.Email, "@") && strings.Contains(get.Email, ".") {
+		sdk.Fail(c, http.StatusBadRequest, "Email tidak valid")
 		return
 	}
 	if (!upperCase(get.Password)) || (!hasNum(get.Password)) {
 		sdk.Fail(c, http.StatusBadRequest, "Password harus mengandung 1 huruf kapital dan 1 angka")
 		return
 	}
-	if (get.Password != get.Passconfirm) || (len(get.Password) < 8) {
-		sdk.Fail(c, http.StatusBadRequest, "Password tidak sama / kurang dari 8 karakter")
+	if get.Password != get.Passconfirm {
+		sdk.Fail(c, http.StatusBadRequest, "Password tidak sama")
+		return
+	}
+	if len(get.Password) < 8 {
+		sdk.Fail(c, http.StatusBadRequest, "Password kurang dari 8 karakter")
 		return
 	}
 	//Hashing
@@ -129,6 +133,10 @@ func ChangeNameNumber(c *gin.Context) {
 		return
 	}
 	if req.Email != "" {
+		if !strings.Contains(req.Email, "@") && strings.Contains(req.Email, ".") {
+			sdk.Fail(c, http.StatusBadRequest, "Email tidak valid")
+			return
+		}
 		user.Email = req.Email
 	}
 
@@ -172,8 +180,12 @@ func ChangePass(c *gin.Context) {
 		sdk.Fail(c, http.StatusBadRequest, "Password harus mengandung 1 huruf kapital dan 1 angka")
 		return
 	}
-	if (req.NewPass != req.Confirm) || (len(req.NewPass) < 8) {
-		sdk.Fail(c, http.StatusBadRequest, "Password tidak sama / kurang dari 8 karakter")
+	if req.NewPass != req.Confirm {
+		sdk.Fail(c, http.StatusBadRequest, "Password tidak sama")
+		return
+	}
+	if len(req.NewPass) < 8 {
+		sdk.Fail(c, http.StatusBadRequest, "Password kurang dari 8 karakter")
 		return
 	}
 
