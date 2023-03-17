@@ -82,7 +82,7 @@ func LogIn(c *gin.Context) {
 
 	err := sdk.ValidateHash(req.Password, body.Password)
 	if err != nil {
-		sdk.FailOrError(c, http.StatusBadRequest, "Failed to compare the password", err)
+		sdk.FailOrError(c, http.StatusBadRequest, "Invalid Email / Password", err)
 		return
 	}
 	tokenString, err := sdk.Token(req)
@@ -172,7 +172,7 @@ func ChangePass(c *gin.Context) {
 		return
 	}
 	if err := sdk.ValidateHash(user.Password, req.OldPass); err != nil {
-		sdk.FailOrError(c, http.StatusBadRequest, "Failed to compare the password", err)
+		sdk.FailOrError(c, http.StatusBadRequest, "Password Anda salah", err)
 		return
 	}
 	if (!upperCase(req.NewPass)) || (!hasNum(req.NewPass)) {
